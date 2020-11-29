@@ -1,10 +1,12 @@
 import React from 'react';
 
-class VoteMessage extends React.Component {
+
+
+class Message extends React.Component {
 
     constructor(props) {
         super(props);
     }
 }
 
-export default VoteMessage;
+export default Message;

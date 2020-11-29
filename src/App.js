@@ -1,5 +1,5 @@
 import logo from './logo.svg';
-import './App.css';
+// import './App.css';
 import React from 'react';
 import CytoscapeComponent from 'react-cytoscapejs';
 import Container from 'react-bootstrap/Container';
@@ -9,9 +9,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Home from './Home';
 import Navigation from './Navigation';
 import BlockChain from './BlockChain';
-import Proposal from './Proposal';
-import ProposalMessage from './ProposalMessage';
-import VoteMessage from './VoteMessage';
+import Message from './Message';
 import FileUpload from './FileUpload'
 class App extends React.Component {
   
@@ -49,20 +47,9 @@ class App extends React.Component {
   }
 
   render() {
-      const elements = [
-        { data: { id: 'one', label: 'Node 1' }, position: { x: 0, y: 0 } },
-        { data: { id: 'two', label: 'Node 2' }, position: { x: 100, y: 0 } },
-        { data: { source: 'one', target: 'two', label: 'Edge from Node1 to Node2' } }
-    ];
-
     return (
       <>
-        <BlockChain />
-        {/* <Container>
-          <Row>
-            <CytoscapeComponent elements={elements} style={ { width: '1080px', height: '1920px' } } />
-          </Row>
-        </Container> */}
+        <Message />
       </>
     );
   }
