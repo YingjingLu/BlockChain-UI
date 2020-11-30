@@ -1,30 +1,25 @@
 import React from 'react';
 import CytoscapeComponent from 'react-cytoscapejs';
-var { get_state_request_str } = require('./IO');
-const cytoscape = require('cytoscape');
-const dagre = require('cytoscape-dagre');
+import { RoundNav, PlayerNav } from './Navigation';
+
+import cytoscape from 'cytoscape';
+import dagre from 'cytoscape-dagre';
 cytoscape.use( dagre );
 
 /**
  * Props attributes:
- * run_name: the root folder directory of the config and trace
  * 
- * State attributes:
- * cur_player: the id of current player, -1 if nothing
- * cur_round the current round number
- * honest: whether the cur_player is honest
- * display_state: the state data currently being displayed
- * data: the message trace data
+ * run_list: array<String> the array of all runs
+ * cur_run: int index of current run
+ * total_round: int number of rounds for current run
+ * total_player: int number of players for current run
+ * blockchain_data
+ * blockchain_cur_player_id
+ * blockchain_cur_round
  * 
  * 
- * Other data:
- * bool run_name_changed
- * bool cur_player_changed
- * bool cur_round
- * 
- * String selected_run_name
- * String selected_player_id,
- * int selected_round
+ * blockchain_set_round_handler
+ * blockchain_set_player_id_handler
  * 
  */
 
@@ -32,49 +27,35 @@ class BlockChain extends React.Component {
 
     constructor(props) {
         super(props);
+        this.round_updater = this.round_updater.bind(this);
     }
 
-    fetch_data_and_update_state(run_name, player_id, round) {
-        
-        fetch(get_state_request_str(run_name, round))
-        .then(res => res.json())    
-        .then(
-                data => {
-                    console.log(typeof data.data);
-                    this.setState({
-                        player_id: player_id,
-                        cur_round: round, 
-                        data: data.data
-                    });
-                }
-            )
-        .catch( err => {
-            window.alert(err)
-        })
+    round_updater(round) {
+        this.props.blockchain_set_round_handler(round);
+        this.forceUpdate();
     }
 
     getElements() {
         var node_list = [];
         var edge_list = [];
-        var player_list = this.state.data.honest;
-        console.log(this.state.data.honest[0]);
+        var player_list = this.props.blockchain_data.honest;
         var player = undefined;
         // find the player needed
         for (var i = 0; i < player_list.length; i ++) {
-            if (this.state.player_id === player_list[i].player_id) {
+            if (this.props.blockchain_cur_player_id == player_list[i].player_id) {
                 player = player_list[i];
                 break;
             }
         }
         
-        player_list = this.state.data.corrupt;
+        player_list = this.props.blockchain_data.corrupt;
         for(var i = 0; i < player_list.length; i++) {
-            if (this.state.player_id === player_list[i].player_id) {
+            if (this.props.blockchain_cur_player_id == player_list[i].player_id) {
                 player = player_list[i];
                 break;
             }
         }
-        
+        console.log(player);
         if (player !== undefined) {
             // find nodes
             var level_list = player.chains;
@@ -116,26 +97,32 @@ class BlockChain extends React.Component {
         return res;
 	}
 
-    create_elements() {
-        return {
-            nodes: null,
-            edges: null
-        }
-    }
-
-    
-    componentDidMount() {
-        this.fetch_data_and_update_state('streamlet_n_3_f_1_r_6', 1, 5);
-    }
-
-    componentDidUpdate() {
-
-    }
-
     render() {
-        if (this.state != null && this.state.data != null) {
+        var round_nav_bar, player_nav_bar, blockchain_vis;
+
+        // round navigation
+        if (this.props.total_round > -1) {
+            round_nav_bar = <RoundNav 
+                                total_round={this.props.total_round}
+                                set_round={this.round_updater}
+                            />;
+        } else {
+            round_nav_bar = <br />;
+        }
+
+        // player navigation
+        if (this.props.total_player > -1) {
+            player_nav_bar = <PlayerNav
+                                total_player={this.props.total_player}
+                                set_player={this.props.blockchain_set_player_id_handler}
+                            />;
+        } else{
+            player_nav_bar = <br />;
+        }
+
+        if (this.props.blockchain_cur_player_id != -1 && this.props.blockchain_data != undefined) {
             const layout = { name: 'dagre' };
-            return (
+            blockchain_vis = (
                 <>
                     <CytoscapeComponent elements={CytoscapeComponent.normalizeElements(this.getElements())} stylesheet={[
                             {
@@ -158,12 +145,18 @@ class BlockChain extends React.Component {
                           ]} style={ { width: '1080px', height: '1920px'} }  layout={layout} />
                 </>            
             );
+        } else {
+            blockchain_vis = <h1>No available data</h1>;
         }
         
+
         return (
-            <h1>No available data</h1>
-        );
-        
+            <>
+                {round_nav_bar}
+                {player_nav_bar}
+                {blockchain_vis}
+            </>
+        )
     }
 }
 

@@ -3,17 +3,36 @@ import Container from 'react-bootstrap/Container';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Card from 'react-bootstrap/Card';
-import Button from 'react-bootstrap/Button';
-import useState from 'react';
-import Collapse from 'react-bootstrap/Collapse';
-import { CollapsableProposalMessage, CollapsableVoteMessage } from './MessageComponents'
+import { CollapsableProposalMessage, CollapsableVoteMessage } from './MessageComponents';
+import { RoundNav } from './Navigation';
 const IO = require('./IO');
 /**
- * State attributes:
- * data: the message trace object
- * round: current round
- * player_id: the current selected player id
+ * Props:
+ * cur_run: int index of current run 
+ * run_list: array<String> the list of run names
+ * total_round: int total number of rounds for current run
+ * message_cur_round: int the current round message is selecting
+ * message_data: 
  * 
+ * message_collapsable_cur_round_open: false
+ * message_collapsable_will_be_delay_open: false,
+    message_collapsable_not_for_cur_open: false,
+    vote_collapsable_cur_round_open: false,
+    vote_collapsable_will_be_delay_open: false,
+    vote_collapsable_not_for_cur_open: false
+ *  
+
+ Handlers:
+
+ * fetch_message_trace_update_state: function to fetch the message trace needed for
+ * message_set_round_handler: handler to change round
+ * 
+ * message_collapsable_cur_round_open_handler
+ * message_collapsable_will_be_delay_open_handler
+ * message_collapsable_not_for_cur_open_handler
+ * vote_collapsable_cur_round_open_handler
+ * vote_collapsable_will_be_delay_open_handler
+ * vote_collapsable_not_for_cur_open_handler
  */
 class Message extends React.Component {
 
@@ -21,27 +40,10 @@ class Message extends React.Component {
         super(props);
     }
 
-    fetch_data_and_update_state(run_name, player_id, round) {
-
-        fetch(IO.get_message_request_str(run_name, round))
-            .then(res => res.json())
-            .then(
-                data => {
-                    console.log(data.data);
-                    this.setState({
-                        player_id: player_id,
-                        cur_round: round,
-                        data: data.data
-                    });
-                }
-            )
-            .catch(err => {
-                window.alert(err)
-            })
-    }
-
     componentDidMount() {
-        this.fetch_data_and_update_state('streamlet_n_3_f_1_r_6', 1, 1);
+        if (this.props.message_cur_run > -1 && this.props.run_list.length > 0) {
+            this.fetch_message_trace_update_state(this.props.run_list[this.props.cur_run], 0, 0);
+        }
     }
 
     generate_block_proposal() {
@@ -51,10 +53,10 @@ class Message extends React.Component {
                     <Card.Header>Block Proposal</Card.Header>
                     <Card.Body>
                         <Card.Text>
-                            Proposal Block: {this.state.data.proposal.round} Extends: {this.state.data.proposal.prev}
+                            Proposal Block: {this.props.message_data.proposal.round} Extends: {this.props.message_data.proposal.prev}
                         </Card.Text>
                         <Card.Text>
-                            Proposer: {this.state.data.proposal.proposer_id}
+                            Proposer: {this.props.message_data.proposal.proposer_id}
                         </Card.Text>
                     </Card.Body>
                 </Card>
@@ -69,9 +71,9 @@ class Message extends React.Component {
         var cur_round = <br />;
         var will_be_delay = <br />;
         var not_for_cur = <br />;
-        var list = this.state.data.proposal_task;
+        var list = this.props.message_data.proposal_task;
         for (var i = 0; i < list.length; i++) {
-            if (list[i].message.round != this.state.cur_round) {
+            if (list[i].message.round != this.props.message_cur_round) {
                 not_for_cur_list.push(list[i]);
             }
             else if (list[i].delay != 0) {
@@ -86,7 +88,10 @@ class Message extends React.Component {
                 button_key={0}
                 collapse_key={1}
                 text='Proposal Messages For Current Round Block'
-                task_list={cur_round_list} key={3} />;
+                task_list={cur_round_list} 
+                key={3}
+                open={this.props.message_collapsable_cur_round_open}
+                set_open_handler={this.props.message_collapsable_cur_round_open_handler} />;
         }
 
         if (will_be_delay_list.length > 0) {
@@ -94,7 +99,10 @@ class Message extends React.Component {
                 button_key={4}
                 collapse_key={5}
                 text='Will be Delayed Proposal Message'
-                task_list={will_be_delay_list} key={6} />;
+                task_list={will_be_delay_list} 
+                key={6}
+                open={this.props.message_collapsable_will_be_delay_open}
+                set_open_handler={this.props.message_collapsable_will_be_delay_open_handler} />;
         }
 
         if (not_for_cur_list.length > 0) {
@@ -102,7 +110,10 @@ class Message extends React.Component {
                 button_key={7}
                 collapse_key={8}
                 text='Not for Current Block Proposal Message'
-                task_list={not_for_cur_list} key={9} />;
+                task_list={not_for_cur_list} 
+                key={9}
+                open={this.props.message_collapsable_not_for_cur_open}
+                set_open_handler={this.props.message_collapsable_not_for_cur_open_handler} />;
         }
 
         return (
@@ -121,9 +132,9 @@ class Message extends React.Component {
         var cur_round = <></>;
         var will_be_delay = <></>;
         var not_for_cur = <></>;
-        var list = this.state.data.vote_task;
+        var list = this.props.message_data.vote_task;
         for (var i = 0; i < list.length; i++) {
-            if (list[i].message.round != this.state.cur_round) {
+            if (list[i].message.round != this.props.message_cur_round) {
                 not_for_cur_list.push(list[i]);
             }
             else if (list[i].delay != 0) {
@@ -135,10 +146,13 @@ class Message extends React.Component {
 
         if (cur_round_list.length > 0) {
             cur_round = <CollapsableVoteMessage
-                button_key={6}
-                collapse_key={7}
+                button_key={10}
+                collapse_key={11}
                 text='Proposal Messages For Current Round Block'
-                task_list={cur_round_list} />;
+                task_list={cur_round_list}
+                key={12}
+                open={this.props.vote_collapsable_cur_round_open}
+                set_open_handler={this.props.vote_collapsable_cur_round_open_handler} />;
         }
 
         if (will_be_delay_list.length > 0) {
@@ -146,7 +160,10 @@ class Message extends React.Component {
                 button_key={8}
                 collapse_key={9}
                 text='Will be Delayed Proposal Message'
-                task_list={will_be_delay_list} />;
+                task_list={will_be_delay_list}
+                key={13}
+                open={this.props.vote_collapsable_will_be_delay_open}
+                set_open_handler={this.props.vote_collapsable_will_be_delay_open_handler} />;
         }
 
         if (not_for_cur_list.length > 0) {
@@ -154,7 +171,10 @@ class Message extends React.Component {
                 button_key={10}
                 collapse_key={11}
                 text='Not for Current Block Proposal Message'
-                task_list={not_for_cur_list} />;
+                task_list={not_for_cur_list}
+                key={14}
+                open={this.props.vote_collapsable_not_for_cur_open}
+                set_open_handler={this.props.vote_collapsable_not_for_cur_open_handler} />;
         }
 
         return (
@@ -167,23 +187,34 @@ class Message extends React.Component {
     }
 
     render() {
-        if (this.state != undefined && this.state.data != undefined) {
-            const layout = { name: 'dagre' };
-            return (
-                <>
-                    <Container fluid>
-                        <Row>
-                            {this.generate_block_proposal()}
-                            {this.generate_proposal_message_component_array()}
-                            {this.generate_vote_message_component_array()}
-                        </Row>
-                    </Container>
-                </>
-            );
+        var nav_bar, message_content;
+        // create 
+        if (this.props.total_round > -1) {
+            nav_bar = <RoundNav 
+                            total_round={this.props.total_round} 
+                            set_round={this.props.message_set_round_handler} 
+                      />;
+        } else {
+            nav_bar = <br />;
+        }
+        // message content
+        if (this.total_round !== -1 && this.props.message_data != undefined) {
+            message_content = <>
+                                <Row>
+                                    {this.generate_block_proposal()}
+                                    {this.generate_proposal_message_component_array()}
+                                    {this.generate_vote_message_component_array()}
+                                </Row>
+                            </>;
+        } else {
+            message_content = <h1>No available data</h1>;
         }
 
         return (
-            <h1>No available data</h1>
+            <Container fluid>
+                {nav_bar}
+                {message_content}
+            </Container>
         );
 
     }

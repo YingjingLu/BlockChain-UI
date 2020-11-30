@@ -11,7 +11,7 @@ class ProposalMessageCard extends React.Component {
         var task = this.props.task;
         var index = this.props.index
         return (
-            <Card style={{ width: '18rem' }} key={index} className="mb-2" >
+            <Card style={{ width: '18rem' }} key={index + 'proposal'} className="mb-2" >
                 <Card.Header>Proposal Message</Card.Header>
                 <Card.Body>
                     <Card.Text key='11'>
@@ -52,7 +52,7 @@ class VoteMessageCard extends React.Component {
         }
 
         return (
-            <Card border={border} style={{ width: '18rem' }} key={props.index} className="mb-2" >
+            <Card border={border} style={{ width: '18rem' }} key={props.index + 'vote'} className="mb-2" >
                 <Card.Header>Proposal Message</Card.Header>
                 <Card.Body>
                     <Card.Text>
@@ -74,21 +74,21 @@ class VoteMessageCard extends React.Component {
     }
 }
 
+/**
+ * Props
+ * 
+ * collapse_key
+ * button_key
+ * task_list
+ * open
+ * 
+ * set_open_handler
+ * 
+ */
 class CollapsableProposalMessage extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-            open: false
-        };
-        this.setOpen = this.setOpen.bind(this);
-    }
-
-    setOpen() {
-        console.log("triggered");
-        this.setState(
-            { open: !this.state.open }
-        );
     }
 
     return_component() {
@@ -98,9 +98,9 @@ class CollapsableProposalMessage extends React.Component {
     return_button() {
         return (
         <Button
-            onClick={this.setOpen}
+            onClick={this.props.set_open_handler}
             aria-controls="example-collapse-text"
-            aria-expanded={this.state.open}
+            aria-expanded={this.props.open}
             key={this.props.button_key}
         >
             {this.props.text}
@@ -111,9 +111,9 @@ class CollapsableProposalMessage extends React.Component {
         return (
             <>
                 {this.return_button()}
-                <Collapse in={this.state.open} key={this.props.collapse_key}>
+                <Collapse in={this.props.open} key={this.props.collapse_key}>
                     <div>
-                        {this.return_component()}
+                    {this.return_component()}
                     </div>
                 </Collapse>
             </>
