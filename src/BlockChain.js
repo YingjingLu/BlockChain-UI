@@ -1,5 +1,5 @@
 import React from 'react';
-import CytoscapeComponent from 'react-cytoscapejs';
+import CytoscapeComponent from './CyComponents/component';
 import { RoundNav, PlayerNav } from './Navigation';
 
 import cytoscape from 'cytoscape';
@@ -35,6 +35,16 @@ class BlockChain extends React.Component {
         this.forceUpdate();
     }
 
+    construct_id(round, player) {
+        var p;
+        if (player == undefined || player == null) {
+            p = 'undefined';
+        } else {
+            p = player.player_id.toString();
+        }
+        return this.props.blockchain_cur_round * 100000 + round;
+    }
+
     getElements() {
         var node_list = [];
         var edge_list = [];
@@ -55,7 +65,6 @@ class BlockChain extends React.Component {
                 break;
             }
         }
-        console.log(player);
         if (player !== undefined) {
             // find nodes
             var level_list = player.chains;
@@ -93,7 +102,6 @@ class BlockChain extends React.Component {
             nodes: node_list,
             edges: edge_list
         }
-        console.log(res);
         return res;
 	}
 
@@ -128,7 +136,7 @@ class BlockChain extends React.Component {
                             {
                               selector: 'node',
                               style: {
-                                'label': 'data(id)',
+                                'label': 'data(label)',
                                 'text-valign': 'center',
                                 'color': '#000000',
                                 'background-color': '#3a7ecf'
@@ -142,7 +150,7 @@ class BlockChain extends React.Component {
                                 'opacity': 0.5
                               }
                             }
-                          ]} style={ { width: '1080px', height: '1920px'} }  layout={layout} />
+                          ]} style={ { width: '600px', height: '800px'} }  layout={layout} />
                 </>            
             );
         } else {
