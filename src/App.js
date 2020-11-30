@@ -1,7 +1,8 @@
 import logo from './logo.svg';
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-
+import Home from './Home';
+import NavigationBar from './NavigationBar';
 import BlockChain from './BlockChain';
 import Message from './Message';
 import FileUpload from './FileUpload';
@@ -13,7 +14,7 @@ class App extends React.Component {
     this.state = {
       // current run states
       run_list: [],
-      cur_run: -1,
+      cur_run: "",
       total_round: -1,
       total_player: -1,
       // Message component state
@@ -31,7 +32,7 @@ class App extends React.Component {
       blockchain_cur_round: -1
     };
 
-    this.update_cur_run_index_handler = this.update_cur_run_index_handler.bind(this);
+    this.update_cur_run_handler = this.update_cur_run_handler.bind(this);
     this.message_set_round_handler = this.message_set_round_handler.bind(this);
     this.fetch_message_trace_update_state = this.fetch_message_trace_update_state.bind(this);
     this.message_collapsable_cur_round_open_handler = this.message_collapsable_cur_round_open_handler.bind(this);
@@ -70,7 +71,7 @@ class App extends React.Component {
           this.setState({
             total_round: data.data.round,
             total_player: data.data.num_total_player,
-            cur_run: run_index
+            cur_run: this.state.run_list[run_index]
           });
         }
       )
@@ -88,7 +89,7 @@ class App extends React.Component {
           if (data.data.length > 0) {
             this.setState({
               run_list: data.data,
-              cur_run: 0
+              cur_run: data.data[0]
             });
             this.fetch_config_update_state(data.data[0]);
           }
@@ -101,7 +102,7 @@ class App extends React.Component {
 
   fetch_message_trace_update_state(round) {
     console.log(this.state);
-    fetch(IO.get_message_request_str(this.state.run_list[this.state.cur_run], round))
+    fetch(IO.get_message_request_str(this.state.cur_run, round))
       .then(res => res.json())
       .then(
         data => {
@@ -138,14 +139,14 @@ class App extends React.Component {
   blockchain_set_round_handler(round) {
     if (round !== this.state.cur_round && this.state.blockchain_cur_player_id != -1) {
       this.fetch_player_state_update_state(
-        this.state.run_list[this.state.cur_run],
+        this.state.cur_run,
         this.state.blockchain_cur_player_id,
         round
       );
     }
     else if (round !== this.state.cur_round && this.state.blockchain_cur_player_id == -1) {
       this.fetch_player_state_update_state(
-        this.state.run_list[this.state.cur_run],
+        this.state.cur_run,
         0,
         round
       );
@@ -166,7 +167,7 @@ class App extends React.Component {
     }
   }
 
-  update_cur_run_index_handler(new_run_index) {
+  update_cur_run_handler(new_run_index) {
     if (new_run_index != this.state.cur_run) {
       this.fetch_config_update_state_using_index(this.state.run_list[new_run_index]);
     }
@@ -215,40 +216,53 @@ class App extends React.Component {
   render() {
     return (
       <>
-        {/* <Message
-          cur_run={this.state.cur_run}
-          run_list={this.state.run_list}
-          total_round={this.state.total_round}
-          message_cur_round={this.state.message_cur_round}
-          message_data={this.state.message_data}
-          message_collapsable_cur_round_open={this.state.message_collapsable_cur_round_open}
-          message_collapsable_will_be_delay_open={this.state.message_collapsable_will_be_delay_open}
-          message_collapsable_not_for_cur_open={this.state.message_collapsable_not_for_cur_open}
-          vote_collapsable_cur_round_open={this.state.vote_collapsable_cur_round_open}
-          vote_collapsable_will_be_delay_open={this.state.vote_collapsable_will_be_delay_open}
-          vote_collapsable_not_for_cur_open={this.state.vote_collapsable_not_for_cur_open}
-          fetch_message_trace_update_state={this.fetch_message_trace_update_state}
-          message_set_round_handler={this.message_set_round_handler}
-          message_collapsable_cur_round_open_handler={this.message_collapsable_cur_round_open_handler}
-          message_collapsable_will_be_delay_open_handler={this.message_collapsable_will_be_delay_open_handler}
-          message_collapsable_not_for_cur_open_handler={this.message_collapsable_not_for_cur_open_handler}
-          vote_collapsable_cur_round_open_handler={this.vote_collapsable_cur_round_open_handler}
-          vote_collapsable_will_be_delay_open_handler={this.vote_collapsable_will_be_delay_open_handler}
-          vote_collapsable_not_for_cur_open_handler={this.vote_collapsable_not_for_cur_open_handler}
-        /> */}
-
-
-        <BlockChain
-          run_list={this.state.run_list}
-          cur_run={this.state.cur_run}
-          total_round={this.state.total_round}
-          total_player={this.state.total_player}
-          blockchain_data={this.state.blockchain_data}
-          blockchain_cur_player_id={this.state.blockchain_cur_player_id}
-          blockchain_cur_round={this.state.blockchain_cur_round}
-          blockchain_set_round_handler={this.blockchain_set_round_handler}
-          blockchain_set_player_id_handler={this.blockchain_set_player_id_handler}
-        />
+        <BrowserRouter>
+          <NavigationBar 
+            run_list={this.state.run_list}
+            cur_run={this.state.cur_run}
+            update_cur_run_handler={this.update_cur_run_handler}
+          /> 
+          <Switch>
+            <Route path="/" exact strict children={<Home />} />
+            <Route path="/file" children={<FileUpload />} />
+            <Route path="/chain" children={
+                <BlockChain
+                run_list={this.state.run_list}
+                cur_run={this.state.cur_run}
+                total_round={this.state.total_round}
+                total_player={this.state.total_player}
+                blockchain_data={this.state.blockchain_data}
+                blockchain_cur_player_id={this.state.blockchain_cur_player_id}
+                blockchain_cur_round={this.state.blockchain_cur_round}
+                blockchain_set_round_handler={this.blockchain_set_round_handler}
+                blockchain_set_player_id_handler={this.blockchain_set_player_id_handler}
+              />
+            } />
+            <Route path="/msg" children={
+              <Message
+                cur_run={this.state.cur_run}
+                run_list={this.state.run_list}
+                total_round={this.state.total_round}
+                message_cur_round={this.state.message_cur_round}
+                message_data={this.state.message_data}
+                message_collapsable_cur_round_open={this.state.message_collapsable_cur_round_open}
+                message_collapsable_will_be_delay_open={this.state.message_collapsable_will_be_delay_open}
+                message_collapsable_not_for_cur_open={this.state.message_collapsable_not_for_cur_open}
+                vote_collapsable_cur_round_open={this.state.vote_collapsable_cur_round_open}
+                vote_collapsable_will_be_delay_open={this.state.vote_collapsable_will_be_delay_open}
+                vote_collapsable_not_for_cur_open={this.state.vote_collapsable_not_for_cur_open}
+                fetch_message_trace_update_state={this.fetch_message_trace_update_state}
+                message_set_round_handler={this.message_set_round_handler}
+                message_collapsable_cur_round_open_handler={this.message_collapsable_cur_round_open_handler}
+                message_collapsable_will_be_delay_open_handler={this.message_collapsable_will_be_delay_open_handler}
+                message_collapsable_not_for_cur_open_handler={this.message_collapsable_not_for_cur_open_handler}
+                vote_collapsable_cur_round_open_handler={this.vote_collapsable_cur_round_open_handler}
+                vote_collapsable_will_be_delay_open_handler={this.vote_collapsable_will_be_delay_open_handler}
+                vote_collapsable_not_for_cur_open_handler={this.vote_collapsable_not_for_cur_open_handler}
+              />
+            } />
+          </Switch>
+        </BrowserRouter>
       </>
     );
   }

@@ -80,12 +80,6 @@ export default class CytoscapeComponent extends React.Component {
   updateCytoscape(prevProps, newProps) {
     const cy = this._cy;
     const { diff, toJson, get, forEach } = newProps;
-
-    console.log("Prev");
-    console.log(prevProps);
-    console.log("New");
-    console.log(newProps);
-
     patch(cy, prevProps, newProps, diff, toJson, get, forEach);
 
     if (newProps.cy != null) {

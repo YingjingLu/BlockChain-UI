@@ -10,7 +10,6 @@ cytoscape.use( dagre );
  * Props attributes:
  * 
  * run_list: array<String> the array of all runs
- * cur_run: int index of current run
  * total_round: int number of rounds for current run
  * total_player: int number of players for current run
  * blockchain_data
@@ -33,16 +32,6 @@ class BlockChain extends React.Component {
     round_updater(round) {
         this.props.blockchain_set_round_handler(round);
         this.forceUpdate();
-    }
-
-    construct_id(round, player) {
-        var p;
-        if (player == undefined || player == null) {
-            p = 'undefined';
-        } else {
-            p = player.player_id.toString();
-        }
-        return this.props.blockchain_cur_round * 100000 + round;
     }
 
     getElements() {

@@ -41,8 +41,8 @@ class Message extends React.Component {
     }
 
     componentDidMount() {
-        if (this.props.message_cur_run > -1 && this.props.run_list.length > 0) {
-            this.fetch_message_trace_update_state(this.props.run_list[this.props.cur_run], 0, 0);
+        if (this.props.message_cur_run !== "" && this.props.run_list.length > 0) {
+            this.fetch_message_trace_update_state(this.props.cur_run, 0, 0);
         }
     }
 
