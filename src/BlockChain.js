@@ -92,7 +92,13 @@ class BlockChain extends React.Component {
             edges: edge_list
         }
         return res;
-	}
+    }
+    
+    componentDidMount() {
+        if (this.props.cur_run !== "" && this.props.run_list.length > 0) {
+            this.props.fetch_player_state_update_state(this.props.cur_run, 0, 0);
+        }
+    }
 
     render() {
         var round_nav_bar, player_nav_bar, blockchain_vis;
@@ -116,9 +122,9 @@ class BlockChain extends React.Component {
         } else{
             player_nav_bar = <br />;
         }
-
+        const layout = { name: 'dagre' };
         if (this.props.blockchain_cur_player_id != -1 && this.props.blockchain_data != undefined) {
-            const layout = { name: 'dagre' };
+            
             blockchain_vis = (
                 <>
                     <CytoscapeComponent elements={CytoscapeComponent.normalizeElements(this.getElements())} stylesheet={[
@@ -143,7 +149,27 @@ class BlockChain extends React.Component {
                 </>            
             );
         } else {
-            blockchain_vis = <h1>No available data</h1>;
+            blockchain_vis = <>
+            <CytoscapeComponent elements={[]} stylesheet={[
+                    {
+                      selector: 'node',
+                      style: {
+                        'label': 'data(label)',
+                        'text-valign': 'center',
+                        'color': '#000000',
+                        'background-color': '#3a7ecf'
+                      }
+                    },
+                    {
+                      selector: 'edge',
+                      style: {
+                        'width': 2,
+                        'line-color': '#3a7ecf',
+                        'opacity': 0.5
+                      }
+                    }
+                  ]} style={ { width: '600px', height: '800px'} }  layout={layout} />
+        </>;
         }
         
 

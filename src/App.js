@@ -34,6 +34,7 @@ class App extends React.Component {
 
     this.update_cur_run_handler = this.update_cur_run_handler.bind(this);
     this.message_set_round_handler = this.message_set_round_handler.bind(this);
+    this.fetch_player_state_update_state = this.fetch_player_state_update_state.bind(this);
     this.fetch_message_trace_update_state = this.fetch_message_trace_update_state.bind(this);
     this.message_collapsable_cur_round_open_handler = this.message_collapsable_cur_round_open_handler.bind(this);
     this.message_collapsable_will_be_delay_open_handler = this.message_collapsable_will_be_delay_open_handler.bind(this);
@@ -53,26 +54,11 @@ class App extends React.Component {
           console.log(data.data);
           this.setState({
             total_round: data.data.round,
-            total_player: data.data.num_total_player
-          });
-        }
-      )
-      .catch(err => {
-        window.alert(err)
-      })
-  }
-
-  fetch_config_update_state_using_index(run_index) {
-    fetch(IO.get_streamlet_config_request_str(this.state.run_list[run_index]))
-      .then(res => res.json())
-      .then(
-        data => {
-          console.log(data.data);
-          this.setState({
-            total_round: data.data.round,
             total_player: data.data.num_total_player,
-            cur_run: this.state.run_list[run_index]
+            cur_run: run_name
           });
+          this.fetch_message_trace_update_state(0);
+          this.fetch_player_state_update_state(this.state.cur_run, 0, -1);
         }
       )
       .catch(err => {
@@ -167,9 +153,9 @@ class App extends React.Component {
     }
   }
 
-  update_cur_run_handler(new_run_index) {
-    if (new_run_index != this.state.cur_run) {
-      this.fetch_config_update_state_using_index(this.state.run_list[new_run_index]);
+  update_cur_run_handler(run_name) {
+    if (run_name != this.state.cur_run) {
+      this.fetch_config_update_state(run_name);
     }
   }
 
@@ -236,6 +222,7 @@ class App extends React.Component {
                 blockchain_cur_round={this.state.blockchain_cur_round}
                 blockchain_set_round_handler={this.blockchain_set_round_handler}
                 blockchain_set_player_id_handler={this.blockchain_set_player_id_handler}
+                fetch_player_state_update_state={this.fetch_player_state_update_state}
               />
             } />
             <Route path="/msg" children={

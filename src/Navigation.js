@@ -22,13 +22,8 @@ class RoundNav extends React.Component {
         var button_list = [];
         for (var i = -1; i < this.props.total_round; i ++) {
             var text, val;
-            if (i == -1) {
-                text = 'init';
-                val = 'init';
-            } else {
-                text = i.toString();
-                val = i;
-            }
+            text = i.toString();
+            val = i;
             button_list.push(
                 <Button variant="secondary" value={val} onClick={e => this.props.set_round(e.target.value)} key={i.toString() + 'round_bar'} >{text}</Button>
             );
