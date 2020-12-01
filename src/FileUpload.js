@@ -6,55 +6,45 @@ import Row from 'react-bootstrap/Row';
 import axios from 'axios';
 var { get_upload_addr } = require('./IO');
 
-function FileUpload() {
-    const [file, setFile] = useState(''); // storing the uploaded file    // storing the recived file from backend
-    const [data, getFile] = useState({ name: "", path: "" }); const [progress, setProgess] = useState(0); // progess bar
-    const el = useRef(); // accesing input element
-    const handleChange = (e) => {
-        setProgess(0)
+class FileUpload extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+
+    handleChange = (e) => {
         const file = e.target.files[0]; // accesing file
         console.log(file);
-        setFile(file); // storing file
+        this.props.set_upload_file_handler(file, file.name);
     }
-    const uploadFile = () => {
-        const formData = new FormData(); formData.append('file', file); // appending file
-        axios.post(get_upload_addr(), formData, {
-            onUploadProgress: (ProgressEvent) => {
-                let progress = Math.round(
-                    ProgressEvent.loaded / ProgressEvent.total * 100) + '%';
-                setProgess(progress);
-            }
-        }).then(res => {
+
+    uploadFile = () => {
+        if (this.props.upload_file == undefined) {
+            window.alert("Please Select a file to upload");
+            return;
+        }
+        const formData = new FormData(); formData.append('file', this.props.upload_file); // appending file
+        axios.post(get_upload_addr(), formData, {})
+        .then(res => {
             console.log(res);
+            this.props.fetch_all_run_update_state();
             window.alert(`Successfully uploaded case ${res.data.name}`);
         }).catch(err => console.log(err))
     }
-    return (
+    render() {
+        return (
         <Container>
             <br />
             <Row>
                 <Form>
                     <Form.Group controlId="formBasicEmail">
-                        <Form.File id="exampleFormControlFile1" label="Zip File Case" ref={el} onChange={handleChange} />
+                        <Form.File custom id="exampleFormControlFile1" label={this.props.upload_file_name} onChange={this.handleChange} />
                     </Form.Group>
-
-                    <Button variant="info" onClick={uploadFile}>
+                    <Button variant="info" onClick={this.uploadFile}>
                         Upload Case
                     </Button>
-                    {/* <div className="file-upload">
-                        <input type="file" ref={el} onChange={handleChange} />
-                        <div className="progessBar" style={{ width: progress }}>
-                            {progress}
-                        </div>
-                        <button onClick={uploadFile} className="upbutton">                   Upload
-                        </button>
-                        <hr />
-                        {data.path && <img src={data.path} alt={data.name} />}
-                    </div> */}
                 </Form>
             </Row>
-        </Container>
-        
-    );
+        </Container>);
+    }
 }
 export default FileUpload;

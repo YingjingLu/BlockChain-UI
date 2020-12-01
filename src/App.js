@@ -29,7 +29,10 @@ class App extends React.Component {
       // blockchain componenet states
       blockchain_data: undefined,
       blockchain_cur_player_id: -1,
-      blockchain_cur_round: -1
+      blockchain_cur_round: -1,
+      // File upload states
+      upload_file: undefined,
+      upload_file_name: 'No zip file chosen'
     };
 
     this.update_cur_run_handler = this.update_cur_run_handler.bind(this);
@@ -44,6 +47,8 @@ class App extends React.Component {
     this.vote_collapsable_not_for_cur_open_handler = this.vote_collapsable_not_for_cur_open_handler.bind(this);
     this.blockchain_set_player_id_handler = this.blockchain_set_player_id_handler.bind(this);
     this.blockchain_set_round_handler = this.blockchain_set_round_handler.bind(this);
+    this.set_upload_file_handler = this.set_upload_file_handler.bind(this);
+    this.fetch_all_run_update_state = this.fetch_all_run_update_state.bind(this);
   }
 
   fetch_config_update_state(run_name) {
@@ -67,17 +72,23 @@ class App extends React.Component {
   }
 
   fetch_all_run_update_state() {
+    var new_cur_run = this.state.cur_run;
     fetch(IO.get_all_run_request_str())
       .then(res => res.json())
       .then(
         data => {
           console.log(data.data);
+          if (new_cur_run == "") {
+            new_cur_run = data.data[0];
+          }
           if (data.data.length > 0) {
             this.setState({
               run_list: data.data,
-              cur_run: data.data[0]
+              cur_run: new_cur_run
             });
-            this.fetch_config_update_state(data.data[0]);
+            if (this.state.total_round == -1) {
+              this.fetch_config_update_state(data.data[0]);
+            }
           }
         }
       )
@@ -194,6 +205,12 @@ class App extends React.Component {
       { vote_collapsable_not_for_cur_open: !this.state.vote_collapsable_not_for_cur_open }
     );
   }
+  set_upload_file_handler(file, file_name) {
+    this.setState({
+      upload_file: file,
+      upload_file_name: file_name
+    });
+  }
 
   componentDidMount() {
     this.fetch_all_run_update_state();
@@ -210,7 +227,14 @@ class App extends React.Component {
           /> 
           <Switch>
             <Route path="/" exact strict children={<Home />} />
-            <Route path="/file" children={<FileUpload />} />
+            <Route path="/file" children={
+              <FileUpload 
+                set_upload_file_handler={this.set_upload_file_handler}
+                upload_file={this.state.upload_file}
+                upload_file_name={this.state.upload_file_name}
+                fetch_all_run_update_state={this.fetch_all_run_update_state}
+              />} 
+            />
             <Route path="/chain" children={
                 <BlockChain
                 run_list={this.state.run_list}

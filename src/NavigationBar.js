@@ -37,7 +37,7 @@ class NavigationBar extends React.Component {
                 <Nav.Link href="/">Home</Nav.Link>
                 <Nav.Link href="/chain">Blockchain</Nav.Link>
                 <Nav.Link href="/msg">Messages</Nav.Link>
-                <Nav.Link href="/file">Run Upload</Nav.Link>
+                <Nav.Link href="/file">Upload</Nav.Link>
                 </Nav>
                 <Form inline>
                 <Form.Group controlId="exampleForm.ControlSelect1">

@@ -61,11 +61,17 @@ class BlockChain extends React.Component {
             var level_list = player.chains;
             for (var i = 0; i < level_list.length; i ++) {
                 for (var j = 0; j < level_list[i].length; j ++) {
+                    var label_text;
+                    if (level_list[i][j].round == -1) {
+                        label_text = 'G';
+                    } else {
+                        label_text = level_list[i][j].round.toString();
+                    }
                     node_list.push(
                         {
                             data: {
                                 id: level_list[i][j].round.toString(),
-                                label: level_list[i][j].round.toString()
+                                label: label_text
                             }
                         }
                     );
