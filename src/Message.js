@@ -42,14 +42,14 @@ class Message extends React.Component {
 
     componentDidMount() {
         if (this.props.message_cur_run !== "" && this.props.run_list.length > 0) {
-            this.fetch_message_trace_update_state(this.props.cur_run, 0, 0);
+            this.props.fetch_message_trace_update_state(this.props.cur_run, 0, 0);
         }
     }
 
     generate_block_proposal() {
         return (
             <Col>
-                <Card bg='primary' style={{ width: '18rem' }}>
+                <Card border='info' style={{ width: '18rem' }}>
                     <Card.Header>Block Proposal</Card.Header>
                     <Card.Body>
                         <Card.Text>
@@ -87,7 +87,7 @@ class Message extends React.Component {
             cur_round = <CollapsableProposalMessage
                 button_key={0}
                 collapse_key={1}
-                text='Proposal Messages For Current Round Block'
+                text='Current Round Block Proposals'
                 task_list={cur_round_list} 
                 key={3}
                 open={this.props.message_collapsable_cur_round_open}
@@ -98,7 +98,7 @@ class Message extends React.Component {
             will_be_delay = <CollapsableProposalMessage
                 button_key={4}
                 collapse_key={5}
-                text='Will be Delayed Proposal Message'
+                text='Will be Delayed Proposals'
                 task_list={will_be_delay_list} 
                 key={6}
                 open={this.props.message_collapsable_will_be_delay_open}
@@ -109,7 +109,7 @@ class Message extends React.Component {
             not_for_cur = <CollapsableProposalMessage
                 button_key={7}
                 collapse_key={8}
-                text='Not for Current Block Proposal Message'
+                text='Not for Current Block Proposals'
                 task_list={not_for_cur_list} 
                 key={9}
                 open={this.props.message_collapsable_not_for_cur_open}
@@ -117,6 +117,7 @@ class Message extends React.Component {
         }
 
         return (
+            
             <Col>
                 {cur_round}
                 {will_be_delay}
@@ -148,7 +149,7 @@ class Message extends React.Component {
             cur_round = <CollapsableVoteMessage
                 button_key={10}
                 collapse_key={11}
-                text='Proposal Messages For Current Round Block'
+                text='Current Round Block Votes'
                 task_list={cur_round_list}
                 key={12}
                 open={this.props.vote_collapsable_cur_round_open}
@@ -159,7 +160,7 @@ class Message extends React.Component {
             will_be_delay = <CollapsableVoteMessage
                 button_key={8}
                 collapse_key={9}
-                text='Will be Delayed Proposal Message'
+                text='Will be Delayed Votes'
                 task_list={will_be_delay_list}
                 key={13}
                 open={this.props.vote_collapsable_will_be_delay_open}
@@ -170,7 +171,7 @@ class Message extends React.Component {
             not_for_cur = <CollapsableVoteMessage
                 button_key={10}
                 collapse_key={11}
-                text='Not for Current Block Proposal Message'
+                text='Not for Current Block Votes'
                 task_list={not_for_cur_list}
                 key={14}
                 open={this.props.vote_collapsable_not_for_cur_open}
@@ -211,8 +212,10 @@ class Message extends React.Component {
         }
 
         return (
-            <Container fluid>
+            <Container>
+                <br />
                 {nav_bar}
+                <br />
                 {message_content}
             </Container>
         );

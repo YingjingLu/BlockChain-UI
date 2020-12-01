@@ -1,7 +1,9 @@
 import React from 'react';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 import CytoscapeComponent from './CyComponents/component';
 import { RoundNav, PlayerNav } from './Navigation';
-
 import cytoscape from 'cytoscape';
 import dagre from 'cytoscape-dagre';
 cytoscape.use( dagre );
@@ -134,14 +136,14 @@ class BlockChain extends React.Component {
                                 'label': 'data(label)',
                                 'text-valign': 'center',
                                 'color': '#000000',
-                                'background-color': '#3a7ecf'
+                                'background-color': '#22bae0'
                               }
                             },
                             {
                               selector: 'edge',
                               style: {
                                 'width': 2,
-                                'line-color': '#3a7ecf',
+                                'line-color': '#22bae0',
                                 'opacity': 0.5
                               }
                             }
@@ -168,16 +170,27 @@ class BlockChain extends React.Component {
                         'opacity': 0.5
                       }
                     }
-                  ]} style={ { width: '600px', height: '800px'} }  layout={layout} />
+                  ]} style={ { width: '1000px', height: '800px'} }  layout={layout} />
         </>;
         }
         
 
         return (
             <>
-                {round_nav_bar}
-                {player_nav_bar}
-                {blockchain_vis}
+                <Container>
+                    <br/>
+                    <Row>
+                    {round_nav_bar}
+                    </Row>
+                    <Row>
+                    {player_nav_bar}
+                    </Row>
+                    <Row>
+                    {blockchain_vis}
+                    </Row>
+                    
+                </Container>
+                
             </>
         )
     }

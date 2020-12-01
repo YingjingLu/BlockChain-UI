@@ -102,6 +102,7 @@ class CollapsableProposalMessage extends React.Component {
             aria-controls="example-collapse-text"
             aria-expanded={this.props.open}
             key={this.props.button_key}
+            variant="secondary"
         >
             {this.props.text}
         </Button>);

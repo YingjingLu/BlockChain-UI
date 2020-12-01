@@ -40,8 +40,8 @@ class RoundNav extends React.Component {
 
         return (
             <ButtonToolbar aria-label="Toolbar with button groups">
-                <h4>Rounds: </h4>
                 <ButtonGroup className="mr-2" aria-label="First group">
+                <Button variant="secondary" >Rounds: </Button>
                     {this.generate_button_list().map((elem) => elem)}
                 </ButtonGroup>
             </ButtonToolbar>
@@ -74,12 +74,15 @@ class PlayerNav extends React.Component {
     render() {
 
         return (
+            <>
+            {/* <h4>Players: </h4> */}
             <ButtonToolbar aria-label="Toolbar with button groups">
-                <h4>Players: </h4>
                 <ButtonGroup className="mr-2" aria-label="First group">
+                    <Button variant="secondary" >Players: </Button>
                     {this.generate_button_list().map((elem) => elem)}
                 </ButtonGroup>
             </ButtonToolbar>
+            </>
         );
     }
 }

@@ -1,6 +1,8 @@
 import React, { useRef, useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
 import axios from 'axios';
 var { get_upload_addr } = require('./IO');
 
@@ -28,25 +30,31 @@ function FileUpload() {
         }).catch(err => console.log(err))
     }
     return (
-        <Form>
-            <Form.Group controlId="formBasicEmail">
-                <Form.File id="exampleFormControlFile1" label="Zip File Case" ref={el} onChange={handleChange} />
-            </Form.Group>
+        <Container>
+            <br />
+            <Row>
+                <Form>
+                    <Form.Group controlId="formBasicEmail">
+                        <Form.File id="exampleFormControlFile1" label="Zip File Case" ref={el} onChange={handleChange} />
+                    </Form.Group>
 
-            <Button variant="primary" onClick={uploadFile}>
-                Upload Case
-            </Button>
-            {/* <div className="file-upload">
-                <input type="file" ref={el} onChange={handleChange} />
-                <div className="progessBar" style={{ width: progress }}>
-                    {progress}
-                </div>
-                <button onClick={uploadFile} className="upbutton">                   Upload
-                </button>
-                <hr />
-                {data.path && <img src={data.path} alt={data.name} />}
-            </div> */}
-        </Form>
+                    <Button variant="info" onClick={uploadFile}>
+                        Upload Case
+                    </Button>
+                    {/* <div className="file-upload">
+                        <input type="file" ref={el} onChange={handleChange} />
+                        <div className="progessBar" style={{ width: progress }}>
+                            {progress}
+                        </div>
+                        <button onClick={uploadFile} className="upbutton">                   Upload
+                        </button>
+                        <hr />
+                        {data.path && <img src={data.path} alt={data.name} />}
+                    </div> */}
+                </Form>
+            </Row>
+        </Container>
+        
     );
 }
 export default FileUpload;
