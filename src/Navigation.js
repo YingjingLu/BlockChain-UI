@@ -75,11 +75,11 @@ class PlayerNav extends React.Component {
 
         return (
             <>
-            {/* <h4>Players: </h4> */}
             <ButtonToolbar aria-label="Toolbar with button groups">
                 <ButtonGroup className="mr-2" aria-label="First group">
-                    <Button variant="secondary" >Players: </Button>
+                    <Button variant="secondary" key='player button' >Players: </Button>
                     {this.generate_button_list().map((elem) => elem)}
+                    <Button variant="secondary" key='show all' onClick={this.props.blockchain_set_display_all_player_handler} > Show All </Button>
                 </ButtonGroup>
             </ButtonToolbar>
             </>

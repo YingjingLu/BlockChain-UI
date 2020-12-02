@@ -30,6 +30,7 @@ class App extends React.Component {
       blockchain_data: undefined,
       blockchain_cur_player_id: -1,
       blockchain_cur_round: -1,
+      block_chain_display_all_players: true,
       // File upload states
       upload_file: undefined,
       upload_file_name: 'No zip file chosen'
@@ -49,6 +50,7 @@ class App extends React.Component {
     this.blockchain_set_round_handler = this.blockchain_set_round_handler.bind(this);
     this.set_upload_file_handler = this.set_upload_file_handler.bind(this);
     this.fetch_all_run_update_state = this.fetch_all_run_update_state.bind(this);
+    this.blockchain_set_display_all_player_handler = this.blockchain_set_display_all_player_handler.bind(this);
   }
 
   fetch_config_update_state(run_name) {
@@ -156,6 +158,10 @@ class App extends React.Component {
     }
   }
 
+  blockchain_set_display_all_player_handler() {
+    this.setState({ block_chain_display_all_players: !this.state.block_chain_display_all_players });
+  }
+
   message_set_round_handler(round) {
     if (round !== this.state.cur_round) {
       this.fetch_message_trace_update_state(
@@ -244,9 +250,11 @@ class App extends React.Component {
                 blockchain_data={this.state.blockchain_data}
                 blockchain_cur_player_id={this.state.blockchain_cur_player_id}
                 blockchain_cur_round={this.state.blockchain_cur_round}
+                block_chain_display_all_players={this.state.block_chain_display_all_players}
                 blockchain_set_round_handler={this.blockchain_set_round_handler}
                 blockchain_set_player_id_handler={this.blockchain_set_player_id_handler}
                 fetch_player_state_update_state={this.fetch_player_state_update_state}
+                blockchain_set_display_all_player_handler={this.blockchain_set_display_all_player_handler}
               />
             } />
             <Route path="/msg" children={

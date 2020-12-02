@@ -36,27 +36,10 @@ class BlockChain extends React.Component {
         this.forceUpdate();
     }
 
-    getElements() {
+    generate_player_elements(player) {
         var node_list = [];
         var edge_list = [];
-        var player_list = this.props.blockchain_data.honest;
-        var player = undefined;
-        // find the player needed
-        for (var i = 0; i < player_list.length; i ++) {
-            if (this.props.blockchain_cur_player_id == player_list[i].player_id) {
-                player = player_list[i];
-                break;
-            }
-        }
-        
-        player_list = this.props.blockchain_data.corrupt;
-        for(var i = 0; i < player_list.length; i++) {
-            if (this.props.blockchain_cur_player_id == player_list[i].player_id) {
-                player = player_list[i];
-                break;
-            }
-        }
-        if (player !== undefined) {
+        if (player !== undefined && player !== null) {
             // find nodes
             var level_list = player.chains;
             for (var i = 0; i < level_list.length; i ++) {
@@ -97,9 +80,78 @@ class BlockChain extends React.Component {
         }
         var res = {
             nodes: node_list,
-            edges: edge_list
+            edges: edge_list,
+            player_id: player.player_id
         }
         return res;
+    }
+
+    getElements() {
+        var player_list = this.props.blockchain_data.honest;
+        var player = undefined;
+        // find the player needed
+        for (var i = 0; i < player_list.length; i ++) {
+            if (this.props.blockchain_cur_player_id == player_list[i].player_id) {
+                player = player_list[i];
+                break;
+            }
+        }
+        
+        player_list = this.props.blockchain_data.corrupt;
+        for(var i = 0; i < player_list.length; i++) {
+            if (this.props.blockchain_cur_player_id == player_list[i].player_id) {
+                player = player_list[i];
+                break;
+            }
+        }
+        return this.generate_player_elements(player);
+    }
+
+    generate_component(elements, key) {
+        return(
+        <Col>
+            <CytoscapeComponent key={key} elements={CytoscapeComponent.normalizeElements(elements)} stylesheet={[
+                    {
+                        selector: 'node',
+                        style: {
+                        'label': 'data(label)',
+                        'text-valign': 'center',
+                        'color': '#000000',
+                        'background-color': '#22bae0'
+                        }
+                    },
+                    {
+                        selector: 'edge',
+                        style: {
+                        'width': 2,
+                        'line-color': '#22bae0',
+                        'opacity': 0.5
+                        }
+                    }
+                    ]} style={ { width: '500', height: '800px'} }  layout={{ name: 'dagre' }} />
+            <h4>Player: {elements.player_id}</h4>
+        </Col>
+        );
+    }
+
+    generate_all_player_components() {
+        var component_list = [];
+        var cur_list = this.props.blockchain_data.honest;
+        var cur_key = 0;
+        if (cur_list !== undefined) {
+            for (var i = 0; i < cur_list.length; i ++) {
+                component_list.push(this.generate_component(this.generate_player_elements(cur_list[i]), cur_key));
+                cur_key ++;
+            }
+        } 
+        cur_list = this.props.blockchain_data.corrupt;
+        if (cur_list !== undefined) {
+            for (var i = 0; i < cur_list.length; i ++) {
+                component_list.push(this.generate_component(this.generate_player_elements(cur_list[i]), cur_key));
+                cur_key ++;
+            }
+        }
+        return component_list;
     }
     
     componentDidMount() {
@@ -126,36 +178,18 @@ class BlockChain extends React.Component {
             player_nav_bar = <PlayerNav
                                 total_player={this.props.total_player}
                                 set_player={this.props.blockchain_set_player_id_handler}
+                                blockchain_set_display_all_player_handler={this.props.blockchain_set_display_all_player_handler}
                             />;
         } else{
             player_nav_bar = <br />;
         }
-        const layout = { name: 'dagre' };
+
         if (this.props.blockchain_cur_player_id != -1 && this.props.blockchain_data != undefined) {
-            
-            blockchain_vis = (
-                <>
-                    <CytoscapeComponent elements={CytoscapeComponent.normalizeElements(this.getElements())} stylesheet={[
-                            {
-                              selector: 'node',
-                              style: {
-                                'label': 'data(label)',
-                                'text-valign': 'center',
-                                'color': '#000000',
-                                'background-color': '#22bae0'
-                              }
-                            },
-                            {
-                              selector: 'edge',
-                              style: {
-                                'width': 2,
-                                'line-color': '#22bae0',
-                                'opacity': 0.5
-                              }
-                            }
-                          ]} style={ { width: '600px', height: '800px'} }  layout={layout} />
-                </>            
-            );
+            if (this.props.block_chain_display_all_players) {
+                blockchain_vis = this.generate_all_player_components();
+            } else {
+                blockchain_vis = this.generate_component(this.getElements(), 0);
+            }
         } else {
             blockchain_vis = <>
             <CytoscapeComponent elements={[]} stylesheet={[
@@ -176,14 +210,14 @@ class BlockChain extends React.Component {
                         'opacity': 0.5
                       }
                     }
-                  ]} style={ { width: '1000px', height: '800px'} }  layout={layout} />
+                  ]} style={ { width: '1000px', height: '800px'} }  layout={{ name: 'dagre' }} />
         </>;
         }
         
 
         return (
             <>
-                <Container>
+                <Container fluid>
                     <br/>
                     <Row>
                     {round_nav_bar}
