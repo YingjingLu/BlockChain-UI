@@ -14,12 +14,28 @@ class FileUpload extends React.Component {
 
     handleChange = (e) => {
         const file = e.target.files[0]; // accesing file
-        this.props.set_upload_file_handler(file, file.name);
+        if (file == undefined) {
+            return;
+        }
+        const name_split = file.name.split(".");
+        if (name_split.length == 2 && name_split[1] === 'zip') {
+            this.props.set_upload_file_handler(file, file.name);
+        } else {
+            window.alert('Expecting zip file please check format');
+        }
     }
 
     handleChangeForExec = (e) => {
         const file = e.target.files[0]; // accesing file
-        this.props.set_exec_file_handler(file, file.name);
+        if (file == undefined) {
+            return;
+        }
+        const name_split = file.name.split(".");
+        if (name_split.length == 2 && name_split[1] === 'zip') {
+            this.props.set_exec_file_handler(file, file.name);
+        } else {
+            window.alert('Expecting zip file please check format');
+        }
     }
 
     uploadFile = () => {
