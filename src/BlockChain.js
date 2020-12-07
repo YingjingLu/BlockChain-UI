@@ -2,6 +2,7 @@ import React from 'react';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import Badge from 'react-bootstrap/Badge';
 import CytoscapeComponent from './CyComponents/component';
 import { RoundNav, PlayerNav } from './Navigation';
 import cytoscape from 'cytoscape';
@@ -160,6 +161,30 @@ class BlockChain extends React.Component {
         }
         return component_list;
     }
+
+    render_illustrations() {
+        return (
+            <>
+                <style type="text/css">
+                    {`
+                    .badge-flat {
+                    background-color: #bc7dff;
+                    }
+                    `}
+                </style>
+                <Badge pill variant="info">
+                    Not Notarized
+                </Badge>
+                <Badge pill variant="flat">
+                    Notarized
+                </Badge>
+                <Badge pill variant="secondary">
+                    Finalized
+                </Badge>
+
+            </>
+        );
+    }
     
     componentDidMount() {
         if (this.props.cur_run !== "" && this.props.run_list.length > 0) {
@@ -234,6 +259,11 @@ class BlockChain extends React.Component {
                     </Row>
                     <Row>
                     {blockchain_vis}
+                    </Row>
+                    <Row>
+                        <Col>
+                        {this.render_illustrations()}
+                        </Col>
                     </Row>
                     
                 </Container>
