@@ -1,68 +1,57 @@
-# Blockchain Visualizer
+# BlockChain Visualizer
 
-## Available Scripts
+The blockchain visualizer consists of two parts, the UI and the backend. The UI is a ```React native``` application that display the info. The backend talks to the simulator to run the programs and support frontend requests
 
-In the project directory, you can run:
+```
+Blockchain-UI <--request case traces and upload case config--> Blockchain-backend --run case--> Blockchain Simulator
+```
 
-### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Blockchain UI
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+### Homepage
+Tutorial and welcome page of functionality overview
 
-### `npm test`
+### Blockchain page
+Visualization of the streamlet running cases
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Message page
+Visualize all messages communicating for streamlet
 
-### `npm run build`
+### Upload page
+Upload streamlet page for visualization
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Upload both Dolevstrong and Streamlet configuration to get simulation results back
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Blockchain Backend APIs
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Upload Streamlet case zip to the backend and run it with simulator (Streamlet Only)
+```bash
+POST /upload
+```
 
-### `npm run eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+Upload Streamlet Or Dolev Strong case zip to the backend and run it with simulator 
+```bash
+POST /exec
+```
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Get the player state of a case of specific round (Streamlet Only)
+```bash
+GET /player_state/run_id/:run_id/round/:round
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+Get he messages being generated for a specific round (Streamlet Only)
+```bash
+GET /message/run_id/:run_id/round/:round
+```
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+Get the running result of a upload using ```/exec```
+```bash
+GET /get_run/:run_zip_name
+```
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Get the configuration of a specific run (Streamlet Only)
+```bash
+GET /streamlet_config/run_id/:run_id
+```
