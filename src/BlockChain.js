@@ -50,11 +50,18 @@ class BlockChain extends React.Component {
                     } else {
                         label_text = level_list[i][j].round.toString();
                     }
+                    var bg_color = '#22bae0';
+                    if (level_list[i][j].finalized) {
+                        bg_color = '#b3b3b3';
+                    } else if (level_list[i][j].notarized) {
+                        bg_color = '#bc7dff';
+                    }
                     node_list.push(
                         {
                             data: {
                                 id: level_list[i][j].round.toString(),
-                                label: label_text
+                                label: label_text,
+                                background_coloring: bg_color
                             }
                         }
                     );
@@ -117,15 +124,15 @@ class BlockChain extends React.Component {
                         'label': 'data(label)',
                         'text-valign': 'center',
                         'color': '#000000',
-                        'background-color': '#22bae0'
+                        'background-color': 'data(background_coloring)'
                         }
                     },
                     {
                         selector: 'edge',
                         style: {
                         'width': 2,
-                        'line-color': '#22bae0',
-                        'opacity': 0.5
+                        'line-color': '#b3b3b3',
+                        'opacity': 0.8
                         }
                     }
                     ]} style={ { width: '500', height: '800px'} }  layout={{ name: 'dagre' }} />

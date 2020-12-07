@@ -33,7 +33,9 @@ class App extends React.Component {
       block_chain_display_all_players: true,
       // File upload states
       upload_file: undefined,
-      upload_file_name: 'No zip file chosen'
+      upload_file_name: 'No zip file chosen',
+      exec_file: undefined,
+      exec_file_name: 'Config zip file here'
     };
 
     this.update_cur_run_handler = this.update_cur_run_handler.bind(this);
@@ -51,6 +53,7 @@ class App extends React.Component {
     this.set_upload_file_handler = this.set_upload_file_handler.bind(this);
     this.fetch_all_run_update_state = this.fetch_all_run_update_state.bind(this);
     this.blockchain_set_display_all_player_handler = this.blockchain_set_display_all_player_handler.bind(this);
+    this.set_exec_file_handler = this.set_exec_file_handler.bind(this);
   }
 
   fetch_config_update_state(run_name) {
@@ -218,6 +221,13 @@ class App extends React.Component {
     });
   }
 
+  set_exec_file_handler(file, file_name) {
+    this.setState({
+      exec_file: file,
+      exec_file_name: file_name
+    });
+  }
+
   componentDidMount() {
     this.fetch_all_run_update_state();
   }
@@ -238,7 +248,10 @@ class App extends React.Component {
                 set_upload_file_handler={this.set_upload_file_handler}
                 upload_file={this.state.upload_file}
                 upload_file_name={this.state.upload_file_name}
+                exec_file={this.state.exec_file}
+                exec_file_name={this.state.exec_file_name}
                 fetch_all_run_update_state={this.fetch_all_run_update_state}
+                set_exec_file_handler={this.set_exec_file_handler}
               />} 
             />
             <Route path="/chain" children={

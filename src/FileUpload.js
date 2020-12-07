@@ -4,7 +4,8 @@ import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import axios from 'axios';
-var { get_upload_addr } = require('./IO');
+import { get_exec_file_download } from './IO';
+var { get_upload_addr, get_exec_addr } = require('./IO');
 
 class FileUpload extends React.Component {
     constructor(props) {
@@ -13,8 +14,12 @@ class FileUpload extends React.Component {
 
     handleChange = (e) => {
         const file = e.target.files[0]; // accesing file
-        console.log(file);
         this.props.set_upload_file_handler(file, file.name);
+    }
+
+    handleChangeForExec = (e) => {
+        const file = e.target.files[0]; // accesing file
+        this.props.set_exec_file_handler(file, file.name);
     }
 
     uploadFile = () => {
@@ -30,6 +35,19 @@ class FileUpload extends React.Component {
             window.alert(`Successfully uploaded case ${res.data.name}`);
         }).catch(err => console.log(err))
     }
+
+    uploadFileForExec = () => {
+        if (this.props.exec_file == undefined) {
+            window.alert("Please Select a file to upload");
+            return;
+        }
+        const formData = new FormData(); formData.append('file', this.props.exec_file); // appending file
+        axios.post(get_exec_addr(), formData, {})
+        .then(
+            fetch(get_exec_file_download(this.props.exec_file_name)).then(res => res.blob()).then(blob => {console.log(blob); var file = window.URL.createObjectURL(blob);
+                window.location.assign(file);}).catch(err =>{window.alert(err.message)})
+        ).catch(err => window.alert(err))
+    }
     render() {
         return (
         <Container>
@@ -40,6 +58,17 @@ class FileUpload extends React.Component {
                         <Form.File custom id="exampleFormControlFile1" label={this.props.upload_file_name} onChange={this.handleChange} />
                     </Form.Group>
                     <Button variant="info" onClick={this.uploadFile}>
+                        Upload Case
+                    </Button>
+                </Form>
+            </Row>
+            <br />
+            <Row>
+                <Form>
+                    <Form.Group controlId="formBasicEmail2">
+                        <Form.File custom id="exampleFormControlFile2" label={this.props.exec_file_name} onChange={this.handleChangeForExec} />
+                    </Form.Group>
+                    <Button variant="info" onClick={this.uploadFileForExec}>
                         Upload Case
                     </Button>
                 </Form>
