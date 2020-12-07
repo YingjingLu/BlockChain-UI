@@ -169,6 +169,7 @@ class BlockChain extends React.Component {
                     {`
                     .badge-flat {
                     background-color: #bc7dff;
+                    color: white;
                     }
                     `}
                 </style>
