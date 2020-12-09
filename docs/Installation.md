@@ -75,7 +75,8 @@ sudo systemctl restart nginx
 ```
 Then use `forever` or `serve` to start the UI server"
 ```
-forever start index.js
+npm run build
+serve -l 8080 -s build
 ```
 
 Then when you visit your aws ec2 on a browser using your EC2 instance public IPv4, you should see the UI
