@@ -68,7 +68,7 @@ class FileUpload extends React.Component {
         return (
         <Container>
             <br />
-            <h3>Upload Streamlet cases for visualization        </h3>
+            <h3>Upload Streamlet cases for visualization</h3>
             <Row>
                 <Form>
                     <Form.Group controlId="formBasicEmail">
