@@ -145,6 +145,10 @@ class Message extends React.Component {
             }
         }
 
+        console.log(not_for_cur_list);
+        console.log(will_be_delay_list);
+        console.log(cur_round_list);
+
         if (cur_round_list.length > 0) {
             cur_round = <CollapsableVoteMessage
                 button_key={10}
