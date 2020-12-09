@@ -62,22 +62,22 @@ server {
     listen 80;
     server_name _;
 }
-location = / {
+location / {
     proxy_set_header X-Forwarded-For $remote_addr;
     proxy_set_header Host $http_host;
     proxy_pass http://172.31.44.197:8080/; 
 }
-location = /chain {
+location /chain {
     proxy_set_header X-Forwarded-For $remote_addr;
     proxy_set_header Host $http_host;
     proxy_pass http://172.31.44.197:8080/chain; 
 }
-location = /msg {
+location /msg {
     proxy_set_header X-Forwarded-For $remote_addr;
     proxy_set_header Host $http_host;
     proxy_pass http://172.31.44.197:8080/msg; 
 }
-location = /file {
+location /file {
     proxy_set_header X-Forwarded-For $remote_addr;
     proxy_set_header Host $http_host;
     proxy_pass http://172.31.44.197:8080/file; 

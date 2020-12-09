@@ -11,7 +11,7 @@ class ProposalMessageCard extends React.Component {
         var task = this.props.task;
         var index = this.props.index
         return (
-            <Card style={{ width: '18rem' }} key={index + 'proposal'} className="mb-2" >
+            <Card style={{ width: '14rem' }} key={index + 'proposal'} className="mb-2" >
                 <Card.Header>Proposal Message</Card.Header>
                 <Card.Body>
                     <Card.Text key='11'>
@@ -52,7 +52,7 @@ class VoteMessageCard extends React.Component {
         }
 
         return (
-            <Card border={border} style={{ width: '18rem' }} key={props.index + 'vote'} className="mb-2" >
+            <Card border={border} style={{ width: '14rem' }} key={this.props.index + 'vote'} className="mb-2" >
                 <Card.Header>Proposal Message</Card.Header>
                 <Card.Body>
                     <Card.Text>

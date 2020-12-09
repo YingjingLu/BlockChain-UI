@@ -49,7 +49,7 @@ class Message extends React.Component {
     generate_block_proposal() {
         return (
             <Col>
-                <Card border='info' style={{ width: '18rem' }}>
+                <Card border='info' style={{ width: '14rem' }}>
                     <Card.Header>Block Proposal</Card.Header>
                     <Card.Body>
                         <Card.Text>
