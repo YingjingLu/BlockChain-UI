@@ -158,22 +158,22 @@ class Message extends React.Component {
 
         if (will_be_delay_list.length > 0) {
             will_be_delay = <CollapsableVoteMessage
-                button_key={8}
-                collapse_key={9}
+                button_key={13}
+                collapse_key={14}
                 text='Will be Delayed Votes'
                 task_list={will_be_delay_list}
-                key={13}
+                key={15}
                 open={this.props.vote_collapsable_will_be_delay_open}
                 set_open_handler={this.props.vote_collapsable_will_be_delay_open_handler} />;
         }
 
         if (not_for_cur_list.length > 0) {
             not_for_cur = <CollapsableVoteMessage
-                button_key={10}
-                collapse_key={11}
+                button_key={16}
+                collapse_key={17}
                 text='Not for Current Block Votes'
                 task_list={not_for_cur_list}
-                key={14}
+                key={18}
                 open={this.props.vote_collapsable_not_for_cur_open}
                 set_open_handler={this.props.vote_collapsable_not_for_cur_open_handler} />;
         }
