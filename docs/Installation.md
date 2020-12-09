@@ -62,10 +62,60 @@ server {
     listen 80;
     server_name _;
 }
-location / {
+location = / {
     proxy_set_header X-Forwarded-For $remote_addr;
     proxy_set_header Host $http_host;
-    proxy_pass http://<you aws EC2 private IP>:8080; 
+    proxy_pass http://172.31.44.197:8080/; 
+}
+location = /chain {
+    proxy_set_header X-Forwarded-For $remote_addr;
+    proxy_set_header Host $http_host;
+    proxy_pass http://172.31.44.197:8080/chain; 
+}
+location = /msg {
+    proxy_set_header X-Forwarded-For $remote_addr;
+    proxy_set_header Host $http_host;
+    proxy_pass http://172.31.44.197:8080/msg; 
+}
+location = /file {
+    proxy_set_header X-Forwarded-For $remote_addr;
+    proxy_set_header Host $http_host;
+    proxy_pass http://172.31.44.197:8080/file; 
+}
+location /upload {
+    proxy_set_header X-Forwarded-For $remote_addr;
+    proxy_set_header Host $http_host;
+    proxy_pass http://172.31.44.197:4500/upload; 
+}
+location /exec {
+    proxy_set_header X-Forwarded-For $remote_addr;
+    proxy_set_header Host $http_host;
+    proxy_pass http://172.31.44.197:4500/exec; 
+}
+location /get_run {
+    proxy_set_header X-Forwarded-For $remote_addr;
+    proxy_set_header Host $http_host;
+    proxy_pass http://172.31.44.197:4500/get_run; 
+}
+location /player_state {
+    proxy_set_header X-Forwarded-For $remote_addr;
+    proxy_set_header Host $http_host;
+    proxy_pass http://172.31.44.197:4500/player_state; 
+}
+location /message {
+    proxy_set_header X-Forwarded-For $remote_addr;
+    proxy_set_header Host $http_host;
+    proxy_pass http://172.31.44.197:4500/message; 
+}
+location /list_run {
+    proxy_set_header X-Forwarded-For $remote_addr;
+    proxy_set_header Host $http_host;
+    proxy_pass http://172.31.44.197:4500/list_run; 
+}
+location /streamlet_config {
+    proxy_set_header X-Forwarded-For $remote_addr;
+    proxy_set_header Host $http_host;
+    proxy_pass http://172.31.44.197:4500/streamlet_config; 
 }
 ```
 
