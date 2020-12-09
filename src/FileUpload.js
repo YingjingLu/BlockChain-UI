@@ -68,9 +68,8 @@ class FileUpload extends React.Component {
         return (
         <Container>
             <br />
+            <h3>Upload Streamlet cases for visualization        </h3>
             <Row>
-                <h3>Upload Streamlet cases for visualization        </h3>
-                <br />
                 <Form>
                     <Form.Group controlId="formBasicEmail">
                         <Form.File custom id="exampleFormControlFile1" label={this.props.upload_file_name} onChange={this.handleChange} />
