@@ -18,10 +18,10 @@ class ProposalMessageCard extends React.Component {
                         Block ID: {task.message.round}
                     </Card.Text>
                     <Card.Text key='12'>
-                        From Player: {task.message.from_player}
+                        From Player: {task.message.from_player_id}
                     </Card.Text>
                     <Card.Text>
-                        To Player: {task.message.to_player}
+                        To Player: {task.message.to_player_id}
                     </Card.Text>
                     <Card.Text key='13'>
                         Delay: {task.delay}
@@ -53,17 +53,17 @@ class VoteMessageCard extends React.Component {
 
         return (
             <Card border={border} style={{ width: '14rem' }} key={this.props.index + 'vote'} className="mb-2" >
-                <Card.Header>Proposal Message</Card.Header>
+                <Card.Header>Vote Message</Card.Header>
                 <Card.Body>
                     <Card.Text>
                         Block ID: {task.message.round}
                     </Card.Text>
                     {decision}
                     <Card.Text>
-                        From Player: {task.message.from_player}
+                        From Player: {task.message.from_player_id}
                     </Card.Text>
                     <Card.Text>
-                        To Player: {task.message.to_player}
+                        To Player: {task.message.to_player_id}
                     </Card.Text>
                     <Card.Text>
                         Delay: {task.delay}
