@@ -47,21 +47,28 @@ class Message extends React.Component {
     }
 
     generate_block_proposal() {
-        return (
-            <Col>
-                <Card border='info' style={{ width: '14rem' }}>
-                    <Card.Header>Block Proposal</Card.Header>
-                    <Card.Body>
-                        <Card.Text>
-                            Proposal Block: {this.props.message_data.proposal.round} Extends: {this.props.message_data.proposal.prev}
-                        </Card.Text>
-                        <Card.Text>
-                            Proposer: {this.props.message_data.proposal.proposer_id}
-                        </Card.Text>
-                    </Card.Body>
-                </Card>
-            </Col>
-        );
+        if (this.props.message_data.proposal != undefined) {
+            return (
+                <Col>
+                    <Card border='info' style={{ width: '14rem' }}>
+                        <Card.Header>Block Proposal</Card.Header>
+                        <Card.Body>
+                            <Card.Text>
+                                Proposal Block: {this.props.message_data.proposal.round} Extends: {this.props.message_data.proposal.prev}
+                            </Card.Text>
+                            <Card.Text>
+                                Proposer: {this.props.message_data.proposal.proposer_id}
+                            </Card.Text>
+                        </Card.Body>
+                    </Card>
+                </Col>
+            );
+        } else {
+            return (
+                <Col></Col>
+            );
+        }
+        
     }
 
     generate_proposal_message_component_array() {
