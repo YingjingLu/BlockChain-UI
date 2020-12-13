@@ -68,7 +68,10 @@ class FileUpload extends React.Component {
         return (
         <Container>
             <br />
+            <Row>
             <h3>Upload Streamlet cases for visualization</h3>
+            </Row>
+            
             <Row>
                 <Form>
                     <Form.Group controlId="formBasicEmail">
@@ -81,8 +84,9 @@ class FileUpload extends React.Component {
             </Row>
             <br />
             <Row>
-                <h3>Upload Dolev-Strong or Streamlet cases for result</h3>
-                <br />
+            <h3>Upload Dolev-Strong or Streamlet cases for result</h3>  
+            </Row>
+            <Row>
                 <Form>
                     <Form.Group controlId="formBasicEmail2">
                         <Form.File custom id="exampleFormControlFile2" label={this.props.exec_file_name} onChange={this.handleChangeForExec} />
