@@ -63,7 +63,7 @@ class Message extends React.Component {
             );
         } else {
             return (
-                <h4>No Proposal This Round</h4>
+                <h5>No Proposal This Round</h5>
             );
         }
         
@@ -102,8 +102,8 @@ class Message extends React.Component {
     generate_proposal_message_component_array() {
         var cur_round_list = [];
         var will_be_delay_list = [];
-        var cur_round = <br />;
-        var will_be_delay = <br />;
+        var cur_round = <h5>No Proposal Will Arrive Next Round</h5>;
+        var will_be_delay = <h5>No Proposal Will Be Delayed</h5>;
         var list = this.props.message_data.proposal_task;
         for (var i = 0; i < list.length; i++) {
             if (list[i].delay != 1) {
@@ -148,9 +148,8 @@ class Message extends React.Component {
     generate_vote_message_component_array() {
         var cur_round_list = [];
         var will_be_delay_list = [];
-        var cur_round = <></>;
-        var will_be_delay = <></>;
-        var not_for_cur = <></>;
+        var cur_round = <h5>No Votes Will Arrive Next Round</h5>;
+        var will_be_delay = <h5>No Votes Will Be Delayed</h5>;
         var list = this.props.message_data.vote_task;
         for (var i = 0; i < list.length; i++) {
             if (list[i].delay != 1) {
