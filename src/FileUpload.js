@@ -67,7 +67,7 @@ class FileUpload extends React.Component {
                         window.location.assign(file);}).catch(err =>{window.alert(err.message)});
                 }
             }
-        ).catch((err, json) => { console.log(err); console.log(json); window.alert(err.message); })
+        ).catch((err) => { console.log(err.response); window.alert(err); })
     }
     render() {
         return (
