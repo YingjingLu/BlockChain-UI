@@ -60,8 +60,6 @@ class FileUpload extends React.Component {
         axios.post(get_exec_addr(), formData, {})
         .then(
             res => {
-                console.log("MESS");
-                console.log(res);
                 if (res.message) {
                     window.alert(res.message);
                 } else {
@@ -69,7 +67,7 @@ class FileUpload extends React.Component {
                         window.location.assign(file);}).catch(err =>{window.alert(err.message)});
                 }
             }
-        ).catch(err => window.alert(err.message))
+        ).catch(err => { console.log(err); window.alert(err.message); })
     }
     render() {
         return (
