@@ -206,7 +206,9 @@ class Message extends React.Component {
                                 <Row>
                                     <Col>
                                     {this.generate_block_proposal()}
+                                    <br />
                                     {this.generate_input_message()}
+                                    <br />
                                     {this.generate_echo_message()}
                                     </Col>
                                     <Col>
