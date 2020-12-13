@@ -74,7 +74,7 @@ class Message extends React.Component {
             return (<CollapsableEchoMessage
             button_key={22}
             collapse_key={23}
-            text='Input Message Echos'
+            text='Input Echos from Receiver'
             task_list={this.props.message_data.input_echo} 
             key={24}
             open={this.props.input_echo_cur_open}
@@ -89,7 +89,7 @@ class Message extends React.Component {
             return (<CollapsableEchoMessage
             button_key={25}
             collapse_key={26}
-            text='Subsequent Message Echos'
+            text='Implicit Message Echos'
             task_list={this.props.message_data.message_echo} 
             key={27}
             open={this.props.message_echo_cur_open}
@@ -117,7 +117,7 @@ class Message extends React.Component {
             cur_round = <CollapsableProposalMessage
                 button_key={0}
                 collapse_key={1}
-                text='Block Proposals Not Delayed'
+                text='Proposals Not Delayed'
                 task_list={cur_round_list} 
                 key={3}
                 open={this.props.message_collapsable_cur_round_open}
@@ -163,7 +163,7 @@ class Message extends React.Component {
             cur_round = <CollapsableVoteMessage
                 button_key={10}
                 collapse_key={11}
-                text='Block Votes Not Delayed'
+                text='Votes Not Delayed'
                 task_list={cur_round_list}
                 key={12}
                 open={this.props.vote_collapsable_cur_round_open}
