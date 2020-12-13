@@ -69,13 +69,16 @@ class App extends React.Component {
             });
             this.fetch_message_trace_update_state(0);
             this.fetch_player_state_update_state(this.state.cur_run, 0, -1);
-          } else {
+          } else if (data.message) {
+            window.alert("Server caught invalid config for case " + run_name + " error: " + data.message);
+          } 
+          else {
             window.alert("No config data found for case: " + run_name);
           }
         }
       )
       .catch(err => {
-        window.alert(err.message);
+        window.alert(err);
       })
   }
 
