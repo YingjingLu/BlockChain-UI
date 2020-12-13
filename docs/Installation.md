@@ -21,7 +21,10 @@ cd blockchain-backend
 sudo npm install
 sudo npm install -g forever 
 sudo npm install -g serve
-npm install archiver --save  inside backend
+```
+inside backend
+```bash
+npm install archiver --save
 ```
 
 Now you can run the server for local host:
