@@ -9,7 +9,8 @@ class InputMessageCard extends React.Component {
     }
     render() {
         var task = this.props.task;
-        var index = this.props.index
+        var index = this.props.index;
+        var border;
         if (task.delay == 1) {
             border = 'success';
         } else {
@@ -38,7 +39,8 @@ class ProposalMessageCard extends React.Component {
     }
     render() {
         var task = this.props.task;
-        var index = this.props.index
+        var index = this.props.index;
+        var border;
         if (task.delay == 1) {
             border = 'success';
         } else {
