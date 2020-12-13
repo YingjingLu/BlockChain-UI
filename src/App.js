@@ -72,8 +72,8 @@ class App extends React.Component {
         }
       )
       .catch(err => {
-        err.text().then( error => window.alert(error))
-        
+        console.log(err.body);
+        console.log(err.text);
       })
   }
 
