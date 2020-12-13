@@ -60,6 +60,8 @@ class FileUpload extends React.Component {
         axios.post(get_exec_addr(), formData, {})
         .then(
             res => {
+                console.log("MESS");
+                console.log(res);
                 if (res.message) {
                     window.alert(res.message);
                 } else {
