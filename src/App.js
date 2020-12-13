@@ -72,7 +72,7 @@ class App extends React.Component {
         }
       )
       .catch(err => {
-        window.alert(err)
+        window.alert(err.response.data.message);
       })
   }
 
@@ -98,7 +98,7 @@ class App extends React.Component {
         }
       )
       .catch(err => {
-        window.alert(err)
+        window.alert(err.response.data.message);
       })
   }
 
@@ -116,7 +116,7 @@ class App extends React.Component {
         }
       )
       .catch(err => {
-        window.alert(err)
+        window.alert(err.response.data.message);
       })
   }
 
@@ -134,7 +134,7 @@ class App extends React.Component {
         }
       )
       .catch(err => {
-        window.alert(err)
+        window.alert(err.response.data.message);
       })
   }
 
