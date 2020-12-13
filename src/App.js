@@ -72,8 +72,7 @@ class App extends React.Component {
         }
       )
       .catch(err => {
-        console.log(err.body);
-        console.log(err.text);
+        console.log(Object.keys(err));
       })
   }
 
