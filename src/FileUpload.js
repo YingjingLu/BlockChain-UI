@@ -48,7 +48,7 @@ class FileUpload extends React.Component {
         .then(res => {
             this.props.fetch_all_run_update_state();
             window.alert(`Successfully uploaded case ${res.data.name}`);
-        }).catch(err => console.log(err))
+        }).catch(err => window.alert(err.response.data.message))
     }
 
     uploadFileForExec = () => {
@@ -62,7 +62,7 @@ class FileUpload extends React.Component {
             res => {
                 if (res.message == undefined) {
                     fetch(get_exec_file_download(this.props.exec_file_name)).then(res => res.blob()).then(blob => {console.log(blob); var file = window.URL.createObjectURL(blob);
-                        window.location.assign(file);}).catch(err =>{window.alert(err.message)});
+                        window.location.assign(file);}).catch(err =>{window.alert(err.response.data.message)});
                 }
             }
         ).catch((err) => { window.alert(err.response.data.message); })
