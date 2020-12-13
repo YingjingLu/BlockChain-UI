@@ -177,11 +177,11 @@ class CollapsableEchoMessage extends CollapsableProposalMessage {
         for (var i = 0; i < this.props.task_list.length; i++) {
             var task = this.props.task_list[i];
             if (task.round == -2) {
-                comp_array.push(<InputMessageCard task={task} index={index} />);
+                comp_array.push(<InputMessageCard task={task} index={i} />);
             } else if (task.is_vote == true) {
-                comp_array.push(<VoteMessageCard task={task} index={index} />);
+                comp_array.push(<VoteMessageCard task={task} index={i} />);
             } else {
-                comp_array.push(<ProposalMessageCard task={task} index={index} />);
+                comp_array.push(<ProposalMessageCard task={task} index={i} />);
             }
         }
         return comp_array.map((e) => e);
