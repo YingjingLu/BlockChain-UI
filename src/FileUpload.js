@@ -59,15 +59,9 @@ class FileUpload extends React.Component {
         const formData = new FormData(); formData.append('file', this.props.exec_file); // appending file
         axios.post(get_exec_addr(), formData, {})
         .then(
-            res => {
-                if (res.message) {
-                    window.alert(res.message);
-                } else {
-                    fetch(get_exec_file_download(this.props.exec_file_name)).then(res => res.blob()).then(blob => {console.log(blob); var file = window.URL.createObjectURL(blob);
-                        window.location.assign(file);}).catch(err =>{window.alert(err.message)});
-                }
-            }
-        ).catch((err) => { console.log(err.response); window.alert(err); })
+            fetch(get_exec_file_download(this.props.exec_file_name)).then(res => res.blob()).then(blob => {console.log(blob); var file = window.URL.createObjectURL(blob);
+                window.location.assign(file);}).catch(err =>{window.alert(err.message)})
+        ).catch((err) => { window.alert(err.response.data.message); })
     }
     render() {
         return (
