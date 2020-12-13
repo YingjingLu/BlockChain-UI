@@ -61,18 +61,19 @@ class App extends React.Component {
       .then(res => res.json())
       .then(
         data => {
-          console.log(data.data);
-          this.setState({
-            total_round: data.data.round,
-            total_player: data.data.num_total_player,
-            cur_run: run_name
-          });
-          this.fetch_message_trace_update_state(0);
-          this.fetch_player_state_update_state(this.state.cur_run, 0, -1);
+          if (data.data) {
+            this.setState({
+              total_round: data.data.round,
+              total_player: data.data.num_total_player,
+              cur_run: run_name
+            });
+            this.fetch_message_trace_update_state(0);
+            this.fetch_player_state_update_state(this.state.cur_run, 0, -1);
+          }
         }
       )
       .catch(err => {
-        console.log(Object.keys(err));
+        window.alert(err);
       })
   }
 
@@ -82,23 +83,24 @@ class App extends React.Component {
       .then(res => res.json())
       .then(
         data => {
-          console.log(data.data);
-          if (new_cur_run == "") {
-            new_cur_run = data.data[0];
-          }
-          if (data.data.length > 0) {
-            this.setState({
-              run_list: data.data,
-              cur_run: new_cur_run
-            });
-            if (this.state.total_round == -1) {
-              this.fetch_config_update_state(data.data[0]);
+          if (data.data) {
+            if (new_cur_run == "") {
+              new_cur_run = data.data[0];
+            }
+            if (data.data.length > 0) {
+              this.setState({
+                run_list: data.data,
+                cur_run: new_cur_run
+              });
+              if (this.state.total_round == -1) {
+                this.fetch_config_update_state(data.data[0]);
+              }
             }
           }
         }
       )
       .catch(err => {
-        window.alert(err.response.data.message);
+        window.alert(err);
       })
   }
 
@@ -108,15 +110,16 @@ class App extends React.Component {
       .then(res => res.json())
       .then(
         data => {
-          console.log(data.data);
-          this.setState({
-            message_cur_round: round,
-            message_data: data.data
-          });
+          if (data.data) {
+            this.setState({
+              message_cur_round: round,
+              message_data: data.data
+            });
+          }
         }
       )
       .catch(err => {
-        window.alert(err.response.data.message);
+        window.alert(err);
       })
   }
 
@@ -126,15 +129,17 @@ class App extends React.Component {
       .then(res => res.json())
       .then(
         data => {
-          this.setState({
-            blockchain_cur_player_id: player_id,
-            blockchain_cur_round: round,
-            blockchain_data: data.data
-          });
+          if (data.data) {
+            this.setState({
+              blockchain_cur_player_id: player_id,
+              blockchain_cur_round: round,
+              blockchain_data: data.data
+            });
+          }
         }
       )
       .catch(err => {
-        window.alert(err.response.data.message);
+        window.alert(err);
       })
   }
 
