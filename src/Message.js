@@ -139,6 +139,7 @@ class Message extends React.Component {
             
             <>
                 {cur_round}
+                <br />
                 {will_be_delay}
             </>
         );
@@ -184,6 +185,7 @@ class Message extends React.Component {
         return (
             <>
                 {cur_round}
+                <br/>
                 {will_be_delay}
             </>
         );
