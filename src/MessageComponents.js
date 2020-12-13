@@ -3,6 +3,35 @@ import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import Collapse from 'react-bootstrap/Collapse';
 
+class InputMessageCard extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+    render() {
+        var task = this.props.task;
+        var index = this.props.index
+        if (task.delay == 1) {
+            border = 'success';
+        } else {
+            border = 'danger';
+        }
+
+        return (
+            <Card border={border} style={{ width: '14rem' }} key={index + 'Input'} className="mb-2" >
+                <Card.Header>Input Message</Card.Header>
+                <Card.Body>
+                    <Card.Text>
+                        To Player: {task.message.to_player_id}
+                    </Card.Text>
+                    <Card.Text key='13'>
+                        Transactions: {task.message.message.join()}
+                    </Card.Text>
+                </Card.Body>
+            </Card>
+        );
+    }
+}
+
 class ProposalMessageCard extends React.Component {
     constructor(props) {
         super(props);
@@ -10,8 +39,13 @@ class ProposalMessageCard extends React.Component {
     render() {
         var task = this.props.task;
         var index = this.props.index
+        if (task.delay == 1) {
+            border = 'success';
+        } else {
+            border = 'danger';
+        }
         return (
-            <Card style={{ width: '14rem' }} key={index + 'proposal'} className="mb-2" >
+            <Card border={border} style={{ width: '14rem' }} key={index + 'proposal'} className="mb-2" >
                 <Card.Header>Proposal Message</Card.Header>
                 <Card.Body>
                     <Card.Text key='11'>
@@ -43,14 +77,12 @@ class VoteMessageCard extends React.Component {
         var task = props.task;
         var border;
         var decision;
-        if (task.message.approved == "1") {
-            decision = <Card.Text>Vote: APPROVED</Card.Text>;
+        if (task.delay == 1) {
             border = 'success';
         } else {
-            decision = <Card.Text>Vote: DENIED</Card.Text>;
             border = 'danger';
         }
-
+        decision = <Card.Text>Vote: APPROVED</Card.Text>;
         return (
             <Card border={border} style={{ width: '14rem' }} key={this.props.index + 'vote'} className="mb-2" >
                 <Card.Header>Vote Message</Card.Header>
@@ -133,4 +165,25 @@ class CollapsableVoteMessage extends CollapsableProposalMessage {
     }
 }
 
-export { CollapsableProposalMessage, CollapsableVoteMessage };
+class CollapsableEchoMessage extends CollapsableProposalMessage {
+    constructor(props) {
+        super(props);
+    }
+
+    return_component() {
+        var comp_array = [];
+        for (var i = 0; i < this.props.task_list.length; i++) {
+            var task = this.props.task_list[i];
+            if (task.round == -2) {
+                comp_array.push(<InputMessageCard task={task} index={index} />);
+            } else if (task.is_vote == true) {
+                comp_array.push(<VoteMessageCard task={task} index={index} />);
+            } else {
+                comp_array.push(<ProposalMessageCard task={task} index={index} />);
+            }
+        }
+        return comp_array.map((e) => e);
+    }
+}
+
+export { CollapsableProposalMessage, CollapsableVoteMessage, CollapsableEchoMessage };

@@ -3,7 +3,7 @@ import Container from 'react-bootstrap/Container';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Card from 'react-bootstrap/Card';
-import { CollapsableProposalMessage, CollapsableVoteMessage } from './MessageComponents';
+import { CollapsableProposalMessage, CollapsableVoteMessage, CollapsableEchoMessage } from './MessageComponents';
 import { RoundNav } from './Navigation';
 const IO = require('./IO');
 /**
@@ -49,7 +49,6 @@ class Message extends React.Component {
     generate_block_proposal() {
         if (this.props.message_data.proposal != undefined) {
             return (
-                <Col>
                     <Card border='info' style={{ width: '14rem' }}>
                         <Card.Header>Block Proposal</Card.Header>
                         <Card.Body>
@@ -61,29 +60,53 @@ class Message extends React.Component {
                             </Card.Text>
                         </Card.Body>
                     </Card>
-                </Col>
             );
         } else {
             return (
-                <Col></Col>
+                <h4>No Proposal This Round</h4>
             );
         }
         
     }
 
+    generate_input_message() {
+        if (this.props.message_data.input_echo != undefined && this.props.message_data.input_echo.length > 0) {
+            return (<CollapsableEchoMessage
+            button_key={22}
+            collapse_key={23}
+            text='Input Message Echos'
+            task_list={this.props.message_data.input_echo} 
+            key={24}
+            open={this.props.input_echo_cur_open}
+            set_open_handler={this.props.input_echo_open_handler} />);
+        } else {
+            return <></>;
+        }
+    }
+
+    generate_echo_message() {
+        if (this.props.message_data.message_echo != undefined && this.props.message_data.message_echo.length > 0) {
+            return (<CollapsableEchoMessage
+            button_key={25}
+            collapse_key={26}
+            text='Subsequent Message Echos'
+            task_list={this.props.message_data.message_echo} 
+            key={27}
+            open={this.props.message_echo_cur_open}
+            set_open_handler={this.props.message_echo_cur_open_handler} />);
+        } else {
+            return <></>;
+        }
+    }
+
     generate_proposal_message_component_array() {
         var cur_round_list = [];
         var will_be_delay_list = [];
-        var not_for_cur_list = [];
         var cur_round = <br />;
         var will_be_delay = <br />;
-        var not_for_cur = <br />;
         var list = this.props.message_data.proposal_task;
         for (var i = 0; i < list.length; i++) {
-            if (list[i].message.round != this.props.message_cur_round) {
-                not_for_cur_list.push(list[i]);
-            }
-            else if (list[i].delay != 0) {
+            if (list[i].delay != 1) {
                 will_be_delay_list.push(list[i]);
             } else {
                 cur_round_list.push(list[i]);
@@ -94,7 +117,7 @@ class Message extends React.Component {
             cur_round = <CollapsableProposalMessage
                 button_key={0}
                 collapse_key={1}
-                text='Current Round Block Proposals'
+                text='Block Proposals Not Delayed'
                 task_list={cur_round_list} 
                 key={3}
                 open={this.props.message_collapsable_cur_round_open}
@@ -105,62 +128,42 @@ class Message extends React.Component {
             will_be_delay = <CollapsableProposalMessage
                 button_key={4}
                 collapse_key={5}
-                text='Will be Delayed Proposals'
+                text='Proposals Will be Delayed'
                 task_list={will_be_delay_list} 
                 key={6}
                 open={this.props.message_collapsable_will_be_delay_open}
                 set_open_handler={this.props.message_collapsable_will_be_delay_open_handler} />;
         }
 
-        if (not_for_cur_list.length > 0) {
-            not_for_cur = <CollapsableProposalMessage
-                button_key={7}
-                collapse_key={8}
-                text='Not for Current Block Proposals'
-                task_list={not_for_cur_list} 
-                key={9}
-                open={this.props.message_collapsable_not_for_cur_open}
-                set_open_handler={this.props.message_collapsable_not_for_cur_open_handler} />;
-        }
-
         return (
             
-            <Col>
+            <>
                 {cur_round}
                 {will_be_delay}
-                {not_for_cur}
-            </Col>
+            </>
         );
     }
 
     generate_vote_message_component_array() {
         var cur_round_list = [];
         var will_be_delay_list = [];
-        var not_for_cur_list = [];
         var cur_round = <></>;
         var will_be_delay = <></>;
         var not_for_cur = <></>;
         var list = this.props.message_data.vote_task;
         for (var i = 0; i < list.length; i++) {
-            if (list[i].message.round != this.props.message_cur_round) {
-                not_for_cur_list.push(list[i]);
-            }
-            else if (list[i].delay != 0) {
+            if (list[i].delay != 1) {
                 will_be_delay_list.push(list[i]);
             } else {
                 cur_round_list.push(list[i]);
             }
         }
 
-        console.log(not_for_cur_list);
-        console.log(will_be_delay_list);
-        console.log(cur_round_list);
-
         if (cur_round_list.length > 0) {
             cur_round = <CollapsableVoteMessage
                 button_key={10}
                 collapse_key={11}
-                text='Current Round Block Votes'
+                text='Block Votes Not Delayed'
                 task_list={cur_round_list}
                 key={12}
                 open={this.props.vote_collapsable_cur_round_open}
@@ -171,30 +174,18 @@ class Message extends React.Component {
             will_be_delay = <CollapsableVoteMessage
                 button_key={13}
                 collapse_key={14}
-                text='Will be Delayed Votes'
+                text='Votes Will be Delayed'
                 task_list={will_be_delay_list}
                 key={15}
                 open={this.props.vote_collapsable_will_be_delay_open}
                 set_open_handler={this.props.vote_collapsable_will_be_delay_open_handler} />;
         }
 
-        if (not_for_cur_list.length > 0) {
-            not_for_cur = <CollapsableVoteMessage
-                button_key={16}
-                collapse_key={17}
-                text='Not for Current Block Votes'
-                task_list={not_for_cur_list}
-                key={18}
-                open={this.props.vote_collapsable_not_for_cur_open}
-                set_open_handler={this.props.vote_collapsable_not_for_cur_open_handler} />;
-        }
-
         return (
-            <Col>
+            <>
                 {cur_round}
                 {will_be_delay}
-                {not_for_cur}
-            </Col>
+            </>
         );
     }
 
@@ -213,9 +204,18 @@ class Message extends React.Component {
         if (this.total_round !== -1 && this.props.message_data != undefined) {
             message_content = <>
                                 <Row>
+                                    <Col>
                                     {this.generate_block_proposal()}
+                                    {this.generate_input_message()}
+                                    {this.generate_echo_message()}
+                                    </Col>
+                                    <Col>
                                     {this.generate_proposal_message_component_array()}
+                                    </Col>
+                                    <Col>
                                     {this.generate_vote_message_component_array()}
+                                    </Col>
+                                    
                                 </Row>
                             </>;
         } else {

@@ -22,10 +22,10 @@ class App extends React.Component {
       message_data: undefined,
       message_collapsable_cur_round_open: false,
       message_collapsable_will_be_delay_open: false,
-      message_collapsable_not_for_cur_open: false,
+      input_echo_cur_open: false,
       vote_collapsable_cur_round_open: false,
       vote_collapsable_will_be_delay_open: false,
-      vote_collapsable_not_for_cur_open: false,
+      message_echo_cur_open: false,
       // blockchain componenet states
       blockchain_data: undefined,
       blockchain_cur_player_id: -1,
@@ -44,10 +44,10 @@ class App extends React.Component {
     this.fetch_message_trace_update_state = this.fetch_message_trace_update_state.bind(this);
     this.message_collapsable_cur_round_open_handler = this.message_collapsable_cur_round_open_handler.bind(this);
     this.message_collapsable_will_be_delay_open_handler = this.message_collapsable_will_be_delay_open_handler.bind(this);
-    this.message_collapsable_not_for_cur_open_handler = this.message_collapsable_not_for_cur_open_handler.bind(this);
+    this.input_echo_open_handler = this.input_echo_open_handler.bind(this);
     this.vote_collapsable_cur_round_open_handler = this.vote_collapsable_cur_round_open_handler.bind(this);
     this.vote_collapsable_will_be_delay_open_handler = this.vote_collapsable_will_be_delay_open_handler.bind(this);
-    this.vote_collapsable_not_for_cur_open_handler = this.vote_collapsable_not_for_cur_open_handler.bind(this);
+    this.message_echo_cur_open_handler = this.message_echo_cur_open_handler.bind(this);
     this.blockchain_set_player_id_handler = this.blockchain_set_player_id_handler.bind(this);
     this.blockchain_set_round_handler = this.blockchain_set_round_handler.bind(this);
     this.set_upload_file_handler = this.set_upload_file_handler.bind(this);
@@ -191,9 +191,9 @@ class App extends React.Component {
     );
   }
 
-  message_collapsable_not_for_cur_open_handler() {
+  input_echo_open_handler() {
     this.setState(
-      { message_collapsable_not_for_cur_open: !this.state.message_collapsable_not_for_cur_open }
+      { input_echo_cur_open: !this.state.input_echo_cur_open }
     );
   }
 
@@ -209,9 +209,9 @@ class App extends React.Component {
     );
   }
 
-  vote_collapsable_not_for_cur_open_handler() {
+  message_echo_cur_open_handler() {
     this.setState(
-      { vote_collapsable_not_for_cur_open: !this.state.vote_collapsable_not_for_cur_open }
+      { message_echo_cur_open: !this.state.message_echo_cur_open }
     );
   }
   set_upload_file_handler(file, file_name) {
@@ -279,18 +279,18 @@ class App extends React.Component {
                 message_data={this.state.message_data}
                 message_collapsable_cur_round_open={this.state.message_collapsable_cur_round_open}
                 message_collapsable_will_be_delay_open={this.state.message_collapsable_will_be_delay_open}
-                message_collapsable_not_for_cur_open={this.state.message_collapsable_not_for_cur_open}
+                input_echo_cur_open={this.state.input_echo_cur_open}
                 vote_collapsable_cur_round_open={this.state.vote_collapsable_cur_round_open}
                 vote_collapsable_will_be_delay_open={this.state.vote_collapsable_will_be_delay_open}
-                vote_collapsable_not_for_cur_open={this.state.vote_collapsable_not_for_cur_open}
+                message_echo_cur_open={this.state.message_echo_cur_open}
                 fetch_message_trace_update_state={this.fetch_message_trace_update_state}
                 message_set_round_handler={this.message_set_round_handler}
                 message_collapsable_cur_round_open_handler={this.message_collapsable_cur_round_open_handler}
                 message_collapsable_will_be_delay_open_handler={this.message_collapsable_will_be_delay_open_handler}
-                message_collapsable_not_for_cur_open_handler={this.message_collapsable_not_for_cur_open_handler}
+                input_echo_open_handler={this.input_echo_open_handler}
                 vote_collapsable_cur_round_open_handler={this.vote_collapsable_cur_round_open_handler}
                 vote_collapsable_will_be_delay_open_handler={this.vote_collapsable_will_be_delay_open_handler}
-                vote_collapsable_not_for_cur_open_handler={this.vote_collapsable_not_for_cur_open_handler}
+                message_echo_cur_open_handler={this.message_echo_cur_open_handler}
               />
             } />
           </Switch>
