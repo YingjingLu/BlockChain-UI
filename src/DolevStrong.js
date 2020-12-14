@@ -110,7 +110,7 @@ class DolevStrong extends React.Component {
                         'opacity': 0.8
                         }
                     }
-                    ]} style={ { width: '500', height: '800px'} }  layout={{ name: 'avsdf' }} />
+                    ]} style={ { width: '500', height: '800px'} }  layout={{ name: 'avsdf', animate: 'false' }} />
         </Col>
         );
     }
