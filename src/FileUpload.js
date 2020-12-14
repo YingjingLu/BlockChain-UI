@@ -72,7 +72,7 @@ class FileUpload extends React.Component {
         <Container>
             <br />
             <Row>
-            <h3>Upload Streamlet cases for visualization</h3>
+            <h3>Upload Dolev-Strong or Streamlet cases for visualization</h3>
             </Row>
             
             <Row>
@@ -87,7 +87,7 @@ class FileUpload extends React.Component {
             </Row>
             <br />
             <Row>
-            <h3>Upload Dolev-Strong or Streamlet cases for result</h3>  
+            <h3>Upload Dolev-Strong or Streamlet cases for simulation result</h3>  
             </Row>
             <Row>
                 <Form>
