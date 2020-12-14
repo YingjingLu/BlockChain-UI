@@ -197,7 +197,7 @@ class App extends React.Component {
 
   blockchain_set_player_id_handler(player_id) {
     if (player_id !== this.state.blockchain_cur_player_id && player_id != -1) {
-      this.setState({ blockchain_cur_player_id: player_id, block_chain_display_all_players: !this.state.block_chain_display_all_players });
+      this.setState({ blockchain_cur_player_id: player_id, block_chain_display_all_players: false });
     }
   }
 
