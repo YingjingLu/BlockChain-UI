@@ -66,6 +66,8 @@ class App extends React.Component {
         data => {
           if (data.data) {
             if (data.data.protocol == 'streamlet') {
+              console.log("Get Streamlet State");
+              console.log(data.data);
               this.setState({
                 total_round: data.data.streamlet_config.round,
                 total_player: data.data.streamlet_config.num_total_player,
@@ -83,7 +85,7 @@ class App extends React.Component {
               });
             }
             this.fetch_message_trace_update_state(0);
-            this.fetch_player_state_update_state(this.state.cur_run, 0, -1);
+            this.fetch_player_state_update_state(run_name, 0, -1);
           } else if (data.message) {
             window.alert("Server caught invalid config for case " + run_name + " error: " + data.message);
           } 

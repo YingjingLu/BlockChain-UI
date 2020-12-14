@@ -190,9 +190,9 @@ class BlockChain extends React.Component {
     }
     
     componentDidMount() {
-        if (this.props.cur_run !== "" && this.props.run_list.length > 0 && this.props.cur_protocol == 'streamlet') {
-            this.props.fetch_player_state_update_state(this.props.cur_run, 0, 0);
-        }
+        // if (this.props.cur_run !== "" && this.props.run_list.length > 0 && this.props.cur_protocol == 'streamlet') {
+        //     this.props.fetch_player_state_update_state(this.props.cur_run, 0, 0);
+        // }
     }
 
     render() {
