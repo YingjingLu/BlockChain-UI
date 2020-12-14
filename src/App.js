@@ -149,7 +149,7 @@ class App extends React.Component {
   }
 
   fetch_player_state_update_state(run_name, player_id, round) {
-
+    console.log("Gpt Player State: " + run_name);
     fetch(IO.get_state_request_str(run_name, round))
       .then(res => res.json())
       .then(
