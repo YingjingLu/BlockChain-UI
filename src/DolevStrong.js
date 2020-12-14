@@ -2,6 +2,7 @@ import React from 'react';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import Alert from 'react-bootstrap/Alert';
 import Badge from 'react-bootstrap/Badge';
 import CytoscapeComponent from './CyComponents/component';
 import { RoundNav, PlayerNav } from './Navigation';
@@ -129,7 +130,7 @@ class DolevStrong extends React.Component {
             else {
                 player_text = "0, 1";
             }
-            end_array.push(<p>Player {player.player_id}: {player_text}</p>)
+            end_array.push(<Alert variant="primary">Player {player.player_id}: {player_text}</Alert>)
             
         }
         for (var i = 0; i < this.props.blockchain_data.corrupt.length; i ++) {
@@ -144,11 +145,14 @@ class DolevStrong extends React.Component {
             else {
                 player_text = "0, 1";
             }
-            end_array.push(<p>Player {player.player_id}: {player_text}</p>)
+            end_array.push(<Alert variant="danger">Player {player.player_id}: {player_text}</Alert>)
             
         }
         return (
             <Col>
+                <h2>
+                    Players' Extracted Sets <Badge variant="primary">Honest</Badge> <Badge variant="danger">Corrupt</Badge>
+                </h2>
                 {end_array.map((e) => e)}
             </Col>
         );
@@ -231,7 +235,7 @@ class DolevStrong extends React.Component {
 
         return (
             <>
-                <Container fluid>
+                <Container>
                     <br/>
                     <Row>
                     {round_nav_bar}
