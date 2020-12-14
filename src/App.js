@@ -158,6 +158,10 @@ class App extends React.Component {
               blockchain_cur_round: round,
               blockchain_data: data.data
             });
+          } else {
+            if (data.message) {
+              window.alert(data.message);
+            }
           }
         }
       )
