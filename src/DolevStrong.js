@@ -161,7 +161,7 @@ class DolevStrong extends React.Component {
     render_illustrations() {
         return (
             <>
-                <p>Cur Round Output Bit</p>
+                <p>Cur Round Output Bit</p>{' '}
                 <style type="text/css">
                     {`
                     .badge-flat {
