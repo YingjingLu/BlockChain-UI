@@ -64,30 +64,36 @@ class App extends React.Component {
       .then(res => res.json())
       .then(
         data => {
-          if (data.data) {
-            this.fetch_message_trace_update_state(0);
-            this.fetch_player_state_update_state(run_name, 0, -1);
-            if (data.data.protocol == 'streamlet') {
-              console.log("Get Streamlet State");
-              console.log(data.data);
+          if (data.message) {
+            window.alert("Server caught invalid config for case " + run_name + " error: " + data.message);
+          } else if (data.config) {
+            if (data.config.protocol == 'streamlet') {
               this.setState({
-                total_round: data.data.streamlet_config.round,
-                total_player: data.data.streamlet_config.num_total_player,
+                total_round: data.config.streamlet_config.round,
+                total_player: data.config.streamlet_config.num_total_player,
                 cur_run: run_name,
-                cur_protocol: data.data.protocol,
-                inputs: data.data.streamlet_config.inputs
+                cur_protocol: data.config.protocol,
+                inputs: data.config.streamlet_config.inputs,
+                message_cur_round: 0,
+                message_data: data.message_trace,
+                blockchain_cur_player_id: 0,
+                blockchain_cur_round: -1,
+                blockchain_data: data.state_trace
               });
             } else {
               this.setState({
-                total_round: data.data.dolev_strong_config.round,
-                total_player: data.data.dolev_strong_config.num_total_player,
+                total_round: data.config.dolev_strong_config.round,
+                total_player: data.config.dolev_strong_config.num_total_player,
                 cur_run: run_name,
-                cur_protocol: data.data.protocol,
-                inputs: data.data.dolev_strong_config.inputs
+                cur_protocol: data.config.protocol,
+                inputs: data.config.dolev_strong_config.inputs,
+                message_cur_round: 0,
+                message_data: data.message_trace,
+                blockchain_cur_player_id: 0,
+                blockchain_cur_round: -1,
+                blockchain_data: data.state_trace
               });
             }
-          } else if (data.message) {
-            window.alert("Server caught invalid config for case " + run_name + " error: " + data.message);
           } 
           else {
             window.alert("No config data found for case: " + run_name);
