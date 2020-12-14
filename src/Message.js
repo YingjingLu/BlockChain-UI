@@ -201,11 +201,9 @@ class Message extends React.Component {
                     }
                     `}
             </style>
-            <Container>
                 <Row>
                 {this.props.message_data.map((elem, index) => <DolevStrongMessageCard task={elem} index={index} />)}
                 </Row>
-            </Container>
             </>
         );
     }
@@ -213,10 +211,6 @@ class Message extends React.Component {
     render() {
         if (this.props.cur_protocol == undefined) {
             return <Container><h2>No Protocol Case Selected, Please use 'Upload' to add cases</h2></Container>
-        }
-
-        if (this.props.cur_protocol == 'dolev_strong') {
-            return this.render_dolev_strong_message();
         }
 
         var nav_bar, message_content;
@@ -231,7 +225,8 @@ class Message extends React.Component {
         }
         // message content
         if (this.total_round !== -1 && this.props.message_data != undefined) {
-            message_content = <>
+            if (this.props.cur_protocol == 'streamlet') {
+                message_content = <>
                                 <Row>
                                     <Col>
                                     {this.generate_block_proposal()}
@@ -249,6 +244,10 @@ class Message extends React.Component {
                                     
                                 </Row>
                             </>;
+            } else {
+                message_content = this.render_dolev_strong_message();
+            }
+            
         } else {
             message_content = <h1>No available data</h1>;
         }
