@@ -35,8 +35,9 @@ class NavigationBar extends React.Component {
                 <Navbar.Brand href="/">Visualizer</Navbar.Brand>
                 <Nav className="mr-auto">
                 <Nav.Link href="/">Home</Nav.Link>
-                <Nav.Link href="/chain">Blockchain</Nav.Link>
-                <Nav.Link href="/msg">Messages</Nav.Link>
+                <Nav.Link href="/chain">Streamlet Chain</Nav.Link>
+                <Nav.Link href="/msg">Streamlet Messages</Nav.Link>
+                <Nav.Link href="/dolev_strong">Dolev Strong</Nav.Link>
                 <Nav.Link href="/file">Upload</Nav.Link>
                 </Nav>
                 <Form inline>

@@ -191,6 +191,10 @@ class Message extends React.Component {
     }
 
     render() {
+        if (this.props.cur_protocol == undefined || this.props.cur_protocol != 'streamlet') {
+            return <Container><h2>No messages for Streamlet to Display, Please Select a Streamlet Case</h2></Container>;
+        }
+
         var nav_bar, message_content;
         // create 
         if (this.props.total_round > -1) {

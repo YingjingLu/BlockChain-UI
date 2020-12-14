@@ -80,6 +80,11 @@ location /msg {
     proxy_set_header Host $http_host;
     proxy_pass http://172.31.44.197:8080/msg; 
 }
+location /dolev_strong {
+    proxy_set_header X-Forwarded-For $remote_addr;
+    proxy_set_header Host $http_host;
+    proxy_pass http://172.31.44.197:8080/dolev_strong; 
+}
 location /file {
     proxy_set_header X-Forwarded-For $remote_addr;
     proxy_set_header Host $http_host;

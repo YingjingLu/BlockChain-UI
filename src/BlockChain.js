@@ -194,6 +194,9 @@ class BlockChain extends React.Component {
     }
 
     render() {
+        if (this.props.cur_protocol == undefined || this.props.cur_protocol != 'streamlet') {
+            return <Container><h2>No Player States for Streamlet to Display, Please Select a Streamlet Case</h2></Container>;
+        }
         var round_nav_bar, player_nav_bar, blockchain_vis;
 
         // round navigation

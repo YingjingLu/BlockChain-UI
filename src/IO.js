@@ -27,8 +27,8 @@ function get_all_run_request_str() {
     return SERVER + 'list_run';
 }
 
-function get_streamlet_config_request_str(run_name) {
-    return SERVER + 'streamlet_config/run_id/' + run_name;
+function get_config_request_str(run_name) {
+    return SERVER + 'config/run_id/' + run_name;
 }
 
 export {
@@ -37,6 +37,6 @@ export {
     get_state_request_str,
     get_message_request_str,
     get_all_run_request_str,
-    get_streamlet_config_request_str,
+    get_config_request_str,
     get_exec_file_download
 };

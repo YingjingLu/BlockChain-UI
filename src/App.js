@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Home from './Home';
 import NavigationBar from './NavigationBar';
 import BlockChain from './BlockChain';
+import DolevStrong from './DolevStrong';
 import Message from './Message';
 import FileUpload from './FileUpload';
 const IO = require('./IO');
@@ -17,6 +18,8 @@ class App extends React.Component {
       cur_run: "",
       total_round: -1,
       total_player: -1,
+      cur_protocol: undefined,
+      inputs: undefined,
       // Message component state
       message_cur_round: -1,
       message_data: undefined,
@@ -57,16 +60,28 @@ class App extends React.Component {
   }
 
   fetch_config_update_state(run_name) {
-    fetch(IO.get_streamlet_config_request_str(run_name))
+    fetch(IO.get_config_request_str(run_name))
       .then(res => res.json())
       .then(
         data => {
           if (data.data) {
-            this.setState({
-              total_round: data.data.round,
-              total_player: data.data.num_total_player,
-              cur_run: run_name
-            });
+            if (data.data.protocol == 'streamlet') {
+              this.setState({
+                total_round: data.data.streamlet_config.round,
+                total_player: data.data.streamlet_config.num_total_player,
+                cur_run: run_name,
+                cur_protocol: data.data.protocol,
+                inputs: data.data.streamlet_config.inputs
+              });
+            } else {
+              this.setState({
+                total_round: data.data.dolev_strong_config.round,
+                total_player: data.data.dolev_strong_config.num_total_player,
+                cur_run: run_name,
+                cur_protocol: data.data.protocol,
+                inputs: data.data.dolev_strong_config.inputs
+              });
+            }
             this.fetch_message_trace_update_state(0);
             this.fetch_player_state_update_state(this.state.cur_run, 0, -1);
           } else if (data.message) {
@@ -268,6 +283,7 @@ class App extends React.Component {
                 <BlockChain
                 run_list={this.state.run_list}
                 cur_run={this.state.cur_run}
+                cur_protocol={this.state.cur_protocol}
                 total_round={this.state.total_round}
                 total_player={this.state.total_player}
                 blockchain_data={this.state.blockchain_data}
@@ -284,6 +300,8 @@ class App extends React.Component {
               <Message
                 cur_run={this.state.cur_run}
                 run_list={this.state.run_list}
+                cur_protocol={this.state.cur_protocol}
+                inputs={this.state.inputs}
                 total_round={this.state.total_round}
                 message_cur_round={this.state.message_cur_round}
                 message_data={this.state.message_data}
@@ -301,6 +319,23 @@ class App extends React.Component {
                 vote_collapsable_cur_round_open_handler={this.vote_collapsable_cur_round_open_handler}
                 vote_collapsable_will_be_delay_open_handler={this.vote_collapsable_will_be_delay_open_handler}
                 message_echo_cur_open_handler={this.message_echo_cur_open_handler}
+              />
+            } />
+            <Route path="/dolev_strong" children={
+                <DolevStrong
+                run_list={this.state.run_list}
+                cur_run={this.state.cur_run}
+                cur_protocol={this.state.cur_protocol}
+                total_round={this.state.total_round}
+                total_player={this.state.total_player}
+                blockchain_data={this.state.blockchain_data}
+                blockchain_cur_player_id={this.state.blockchain_cur_player_id}
+                blockchain_cur_round={this.state.blockchain_cur_round}
+                block_chain_display_all_players={this.state.block_chain_display_all_players}
+                blockchain_set_round_handler={this.blockchain_set_round_handler}
+                blockchain_set_player_id_handler={this.blockchain_set_player_id_handler}
+                fetch_player_state_update_state={this.fetch_player_state_update_state}
+                blockchain_set_display_all_player_handler={this.blockchain_set_display_all_player_handler}
               />
             } />
           </Switch>
