@@ -112,6 +112,8 @@ class BlockChain extends React.Component {
                 break;
             }
         }
+        console.log("get data");
+        console.log(this.props.blockchain_data);
         return this.generate_player_elements(player);
     }
 
