@@ -110,8 +110,47 @@ class DolevStrong extends React.Component {
                         'opacity': 0.8
                         }
                     }
-                    ]} style={ { width: '500px', height: '800px'} }  layout={{ name: 'avsdf', animate: 'false' }} />
+                    ]} style={ { width: '500', height: '800px'} }  layout={{ name: 'avsdf', animate: 'false' }} />
         </Col>
+        );
+    }
+
+    render_extracted_set() {
+        var end_array = []
+        for (var i = 0; i < this.props.blockchain_data.honest.length; i ++) {
+            var player = this.props.blockchain_data.honest[i];
+            var player_text;
+            if (player.extracted_set.length == 0) {
+                player_text = "F";
+            }
+            else if (player.extracted_set.length == 1) {
+                player_text = player.extracted_set[0];
+            }
+            else {
+                player_text = "0, 1";
+            }
+            end_array.push(<p>Player {player.player_id}: {player_text}</p>)
+            
+        }
+        for (var i = 0; i < this.props.blockchain_data.corrupt.length; i ++) {
+            var player = this.props.blockchain_data.corrupt[i];
+            var player_text;
+            if (player.extracted_set.length == 0) {
+                player_text = "F";
+            }
+            else if (player.extracted_set.length == 1) {
+                player_text = player.extracted_set[0];
+            }
+            else {
+                player_text = "0, 1";
+            }
+            end_array.push(<p>Player {player.player_id}: {player_text}</p>)
+            
+        }
+        return (
+            <Col>
+                {end_array.map((e) => e)}
+            </Col>
         );
     }
 
@@ -150,7 +189,7 @@ class DolevStrong extends React.Component {
         if (this.props.cur_protocol == undefined || this.props.cur_protocol != 'dolev_strong') {
             return <Container><h2>Current Case is Not Dolev Strong, Please Select a Dolev Strong Case</h2></Container>;
         }
-        var round_nav_bar, blockchain_vis;
+        var round_nav_bar, blockchain_vis, player_state;
 
         // round navigation
         if (this.props.total_round > -1) {
@@ -164,6 +203,7 @@ class DolevStrong extends React.Component {
 
         if (this.props.blockchain_cur_player_id != -1 && this.props.blockchain_data != undefined) {
             blockchain_vis = this.generate_component(this.getElements(), 0);
+            player_state = this.render_extracted_set();
         } else {
             blockchain_vis = <>
             <CytoscapeComponent elements={[]} stylesheet={[
@@ -186,8 +226,8 @@ class DolevStrong extends React.Component {
                     }
                   ]} style={ { width: '1000px', height: '800px'} }  layout={{ name: 'avsdf' }} />
         </>;
+        player_state = <></>;
         }
-        
 
         return (
             <>
@@ -198,6 +238,7 @@ class DolevStrong extends React.Component {
                     </Row>
                     <Row>
                     {blockchain_vis}
+                    {player_state}
                     </Row>
                     <Row>
                         <Col>
