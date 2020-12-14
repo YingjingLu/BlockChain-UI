@@ -150,9 +150,9 @@ class DolevStrong extends React.Component {
         }
         return (
             <Col>
-                <h2>
+                <h3>
                     Extracted Sets <Badge variant="primary">Honest</Badge> <Badge variant="danger">Corrupt</Badge>
-                </h2>
+                </h3>
                 {end_array.map((e) => e)}
             </Col>
         );
