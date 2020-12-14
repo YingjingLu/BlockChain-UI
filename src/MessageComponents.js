@@ -2,6 +2,7 @@ import React from 'react';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import Collapse from 'react-bootstrap/Collapse';
+import Badge from 'react-bootstrap/Badge';
 
 class InputMessageCard extends React.Component {
     constructor(props) {
@@ -27,6 +28,42 @@ class InputMessageCard extends React.Component {
                     <Card.Text key='13'>
                         Transactions: {task.message.message.join()}
                     </Card.Text>
+                </Card.Body>
+            </Card>
+        );
+    }
+}
+
+class DolevStrongMessageCard extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+    render() {
+        var task = this.props.task;
+        var index = this.props.index;
+        var border;
+        if (task.delay == 1) {
+            border = 'success';
+        } else {
+            border = 'danger';
+        }
+        var badge_variant = 'info';
+        if (task.message.message[0] == '0') {
+            badge_variant = 'flat';
+        }
+
+        return (
+            <Card border={border}  style={{ width: '10rem' }} key={index + 'dolev'} className="mb-2" >
+                <Card.Body>
+                    <Card.Text>
+                        from Player: {task.message.from_player_id}
+                    </Card.Text>
+                    <Card.Text>
+                        To Player: {task.message.to_player_id}
+                    </Card.Text>
+                    <Badge pill variant={badge_variant}>
+                        {task.message.message[0]}
+                    </Badge>
                 </Card.Body>
             </Card>
         );
@@ -188,4 +225,4 @@ class CollapsableEchoMessage extends CollapsableProposalMessage {
     }
 }
 
-export { CollapsableProposalMessage, CollapsableVoteMessage, CollapsableEchoMessage };
+export { CollapsableProposalMessage, CollapsableVoteMessage, CollapsableEchoMessage, DolevStrongMessageCard };

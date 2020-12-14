@@ -3,7 +3,7 @@ import Container from 'react-bootstrap/Container';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Card from 'react-bootstrap/Card';
-import { CollapsableProposalMessage, CollapsableVoteMessage, CollapsableEchoMessage } from './MessageComponents';
+import { CollapsableProposalMessage, CollapsableVoteMessage, CollapsableEchoMessage, DolevStrongMessageCard } from './MessageComponents';
 import { RoundNav } from './Navigation';
 const IO = require('./IO');
 /**
@@ -190,9 +190,33 @@ class Message extends React.Component {
         );
     }
 
+    render_dolev_strong_message() {
+        return(
+            <>
+            <style type="text/css">
+                    {`
+                    .badge-flat {
+                    background-color: #bc7dff;
+                    color: white;
+                    }
+                    `}
+            </style>
+            <Container>
+                <Row>
+                {this.props.message_data.map((elem, index) => <DolevStrongMessageCard task={elem} index={index} />)}
+                </Row>
+            </Container>
+            </>
+        );
+    }
+
     render() {
-        if (this.props.cur_protocol == undefined || this.props.cur_protocol != 'streamlet') {
-            return <Container><h2>No messages for Streamlet to Display, Please Select a Streamlet Case</h2></Container>;
+        if (this.props.cur_protocol == undefined) {
+            return <Container><h2>No Protocol Case Selected, Please use 'Upload' to add cases</h2></Container>
+        }
+
+        if (this.props.cur_protocol == 'dolev_strong') {
+            return this.render_dolev_strong_message();
         }
 
         var nav_bar, message_content;
