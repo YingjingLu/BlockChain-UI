@@ -40,6 +40,8 @@ class DolevStrong extends React.Component {
     getElements() {
         var node_list = [];
         var edge_list = [];
+        console.log("Dolev Strong elements");
+        console.log(this.props.blockchain_data);
         for (var i = 0; i < this.props.blockchain_data.length; i ++) {
             var player = this.props.blockchain_data[i];
             var bg_color = '#b3b3b3';

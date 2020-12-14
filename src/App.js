@@ -65,7 +65,6 @@ class App extends React.Component {
       .then(
         data => {
           if (data.data) {
-            console.log(data.data);
             if (data.data.protocol == 'streamlet') {
               this.setState({
                 total_round: data.data.streamlet_config.round,
@@ -105,8 +104,6 @@ class App extends React.Component {
       .then(
         data => {
           if (data.data) {
-            console.log("all_run_data:");
-            console.log(data.data);
             if (new_cur_run == "") {
               new_cur_run = data.data[0];
             }
@@ -132,7 +129,6 @@ class App extends React.Component {
   }
 
   fetch_message_trace_update_state(round) {
-    console.log(this.state);
     fetch(IO.get_message_request_str(this.state.cur_run, round))
       .then(res => res.json())
       .then(

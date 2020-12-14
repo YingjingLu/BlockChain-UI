@@ -120,10 +120,10 @@ location /list_run {
     proxy_set_header Host $http_host;
     proxy_pass http://172.31.44.197:4500/list_run; 
 }
-location /streamlet_config {
+location /config {
     proxy_set_header X-Forwarded-For $remote_addr;
     proxy_set_header Host $http_host;
-    proxy_pass http://172.31.44.197:4500/streamlet_config; 
+    proxy_pass http://172.31.44.197:4500/config; 
 }
 ```
 
