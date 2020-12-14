@@ -15,16 +15,24 @@ class Home extends React.Component {
                 <br />
                 <Row>
                     <Col>
-                        <h1>Streamlet Visualizer Tutorial</h1>
+                        <h1>Visualizer Tutorial</h1>
                     </Col>  
                     
                 </Row>
                 <Row>
                     <Col>
                         <Jumbotron>
-                            <h3>Blockchain Page</h3>
+                            <h3>Streamlet Chain Page</h3>
                             <p>
-                                Display the current chain of selected player in the selected round
+                                Display the current Streamlet Protocol Case's chain of players in the selected round
+                            </p>
+                        </Jumbotron>
+                    </Col>
+                    <Col>
+                        <Jumbotron>
+                            <h3>Dolev Strong Page</h3>
+                            <p>
+                                Display the current Dolev Strong Protocol Case's states in the selected round
                             </p>
                         </Jumbotron>
                     </Col>
@@ -32,10 +40,14 @@ class Home extends React.Component {
                         <Jumbotron>
                             <h3>Message Page</h3>
                             <p>
-                                Display block proposal and all messages generated in the selected round
+                                Display current Protocol Case's messages in a given round
                             </p>
                         </Jumbotron>
                     </Col>
+                    
+                </Row>
+
+                <Row>
                     <Col>
                         <Jumbotron>
                             <h3>Upload Page</h3>
@@ -44,9 +56,6 @@ class Home extends React.Component {
                             </p>
                         </Jumbotron>
                     </Col>
-                </Row>
-
-                <Row>
                     <Col>
                         <Jumbotron>
                             <h3>Switch Between Cases</h3>
