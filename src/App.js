@@ -105,6 +105,8 @@ class App extends React.Component {
       .then(
         data => {
           if (data.data) {
+            console.log("all_run_data:");
+            console.log(data.data);
             if (new_cur_run == "") {
               new_cur_run = data.data[0];
             }
@@ -116,6 +118,10 @@ class App extends React.Component {
               if (this.state.total_round == -1) {
                 this.fetch_config_update_state(data.data[0]);
               }
+            }
+          } else {
+            if (data.message) {
+              window.alert(data.message);
             }
           }
         }
