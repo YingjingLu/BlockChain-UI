@@ -112,8 +112,6 @@ class BlockChain extends React.Component {
                 break;
             }
         }
-        console.log("get data");
-        console.log(this.props.blockchain_data);
         return this.generate_player_elements(player);
     }
 
@@ -146,6 +144,8 @@ class BlockChain extends React.Component {
 
     generate_all_player_components() {
         var component_list = [];
+        console.log("get data");
+        console.log(this.props.blockchain_data);
         var cur_list = this.props.blockchain_data.honest;
         var cur_key = 0;
         if (cur_list !== undefined) {
