@@ -65,6 +65,8 @@ class App extends React.Component {
       .then(
         data => {
           if (data.data) {
+            this.fetch_message_trace_update_state(0);
+            this.fetch_player_state_update_state(run_name, 0, -1);
             if (data.data.protocol == 'streamlet') {
               console.log("Get Streamlet State");
               console.log(data.data);
@@ -84,8 +86,6 @@ class App extends React.Component {
                 inputs: data.data.dolev_strong_config.inputs
               });
             }
-            this.fetch_message_trace_update_state(0);
-            this.fetch_player_state_update_state(run_name, 0, -1);
           } else if (data.message) {
             window.alert("Server caught invalid config for case " + run_name + " error: " + data.message);
           } 
