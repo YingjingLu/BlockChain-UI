@@ -65,6 +65,7 @@ class App extends React.Component {
       .then(
         data => {
           if (data.data) {
+            console.log(data.data);
             if (data.data.protocol == 'streamlet') {
               this.setState({
                 total_round: data.data.streamlet_config.round,
