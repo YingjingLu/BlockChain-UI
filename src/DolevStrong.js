@@ -122,13 +122,13 @@ class DolevStrong extends React.Component {
             var player = this.props.blockchain_data.honest[i];
             var player_text;
             if (player.extracted_set.length == 0) {
-                player_text = "F";
+                player_text = "{}";
             }
             else if (player.extracted_set.length == 1) {
-                player_text = player.extracted_set[0];
+                player_text = "{" + player.extracted_set[0] + "}";
             }
             else {
-                player_text = "0, 1";
+                player_text = "{0, 1}";
             }
             end_array.push(<Alert variant="primary">Player {player.player_id}: {player_text}</Alert>)
             
