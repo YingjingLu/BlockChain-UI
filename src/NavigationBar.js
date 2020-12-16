@@ -37,7 +37,7 @@ class NavigationBar extends React.Component {
                 <Nav.Link href="/">Home</Nav.Link>
                 <Nav.Link href="/chain">Streamlet Chain</Nav.Link>
                 <Nav.Link href="/dolev_strong">Dolev Strong</Nav.Link>
-                <Nav.Link href="/msg">Streamlet Messages</Nav.Link>
+                <Nav.Link href="/msg">Messages</Nav.Link>
                 <Nav.Link href="/file">Upload</Nav.Link>
                 </Nav>
                 <Form inline>
