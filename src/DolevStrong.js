@@ -199,7 +199,7 @@ class DolevStrong extends React.Component {
         // round navigation
         if (this.props.total_round > -1) {
             round_nav_bar = <RoundNav 
-                                total_round={this.props.total_round}
+                                total_round={this.props.total_round + 1}
                                 set_round={this.round_updater}
                             />;
         } else {

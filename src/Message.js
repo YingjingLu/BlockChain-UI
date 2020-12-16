@@ -216,8 +216,12 @@ class Message extends React.Component {
         var nav_bar, message_content;
         // create 
         if (this.props.total_round > -1) {
+            var round = this.props.total_round;
+            if (this.props.cur_protocol == 'dolev_strong') {
+                round ++;
+            }
             nav_bar = <RoundNav 
-                            total_round={this.props.total_round} 
+                            total_round={round} 
                             set_round={this.props.message_set_round_handler} 
                       />;
         } else {
