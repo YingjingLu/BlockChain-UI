@@ -7,7 +7,8 @@ First, please make sure that the backend resides in the same folder as the block
 ```
 root folder
 |-blockchain-simulator
-|-blockchain-backend
+|-Blockchain-Backend
+|-BlockChain-UI
 ```
 
 First install `Node.js`
@@ -32,6 +33,11 @@ Now you can run the server for local host:
 num start
 ```
 
+Or using `forever`:
+```bash
+forever start server.js
+```
+
 **Deployment**
 
 To deploy in the server to run without maintain a shell, we suggest using ```forever```. Just make sure the server listen to ```localhost:4500```
@@ -45,12 +51,19 @@ cd blockchain-ui
 npm install
 ```
 
+Change the line in `Global.js` from top to the bottom one:
+```
+const SERVER = 'http://54.144.41.15/';
+const SERVER = 'http://localhost:3000/';
+```
+
 Now you can test the server from localhost using 
 ```bash
-npm start
+PORT=3000 npm start
 ```
 
 **Deployment**
+
 To make it deploy on a server to allot it to listen publicly, we suggest using ```nginx``` to forward request to the running UI
 
 ```bash
@@ -127,14 +140,22 @@ location /config {
 }
 ```
 
+Note that `172.31.44.197` is the private IP address that we deploy our server in. You should change it into the private IP that you deploy your server in
+
 After saving this then restart `nginx` service
 ```bash
 sudo systemctl restart nginx
 ```
-Then use `forever` or `serve` to start the UI server"
+
+Change the line in `Global.js` from top to the bottom one, you should replace `54.144.41.15` with the public IP that your server deploys in, or public domain name:
+```bash
+const SERVER = 'http://localhost:3000/';
+const SERVER = 'http://54.144.41.15/';
 ```
-npm run build
-serve -l 8080 -s build
+
+Start the UI server
+```bash
+PORT=8080 npm start
 ```
 
 Then when you visit your aws ec2 on a browser using your EC2 instance public IPv4, you should see the UI
