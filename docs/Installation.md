@@ -18,7 +18,7 @@ sudo apt-get install -y nodejs
 ```
 
 ```bash
-cd blockchain-backend
+cd Blockchain-Backend
 sudo npm install
 sudo npm install -g forever 
 sudo npm install -g serve
@@ -47,7 +47,7 @@ forever start server.js
 
 ## Installing the UI
 ```bash
-cd blockchain-ui
+cd BlockChain-UI
 npm install
 ```
 
