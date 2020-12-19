@@ -61,7 +61,7 @@ class FileUpload extends React.Component {
         .then(
             res => {
                 if (res.message == undefined) {
-                    fetch(get_exec_file_download(this.props.exec_file_name)).then(res => {console.log(res); res.blob();}).then(blob => {console.log(blob); var file = window.URL.createObjectURL(blob);
+                    fetch(get_exec_file_download(this.props.exec_file_name)).then(response => response.blob()).then(blob => {console.log(blob); var file = window.URL.createObjectURL(blob);
                         window.location.assign(file);}).catch(err =>{window.alert(err.response.data.message)});
                 }
             }
