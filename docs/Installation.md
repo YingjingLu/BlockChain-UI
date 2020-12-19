@@ -77,7 +77,6 @@ change the `default` configuration content into the following:
 server {
     listen 80;
     server_name _;
-}
 location / {
     proxy_set_header X-Forwarded-For $remote_addr;
     proxy_set_header Host $http_host;
@@ -137,6 +136,7 @@ location /config {
     proxy_set_header X-Forwarded-For $remote_addr;
     proxy_set_header Host $http_host;
     proxy_pass http://172.31.65.28:4500/config; 
+}
 }
 ```
 
