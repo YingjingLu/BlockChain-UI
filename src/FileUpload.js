@@ -60,9 +60,8 @@ class FileUpload extends React.Component {
         axios.post(get_exec_addr(), formData, {})
         .then(
             res => {
-                console.log(res);
                 if (res.message == undefined) {
-                    fetch(get_exec_file_download(this.props.exec_file_name)).then(res => res.blob()).then(blob => {console.log(blob); var file = window.URL.createObjectURL(blob);
+                    fetch(get_exec_file_download(this.props.exec_file_name)).then(res => {console.log(res); res.blob();}).then(blob => {console.log(blob); var file = window.URL.createObjectURL(blob);
                         window.location.assign(file);}).catch(err =>{window.alert(err.response.data.message)});
                 }
             }
