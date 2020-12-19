@@ -53,7 +53,7 @@ npm install
 
 Change the line in `Global.js` from top to the bottom one:
 ```
-const SERVER = 'http://54.144.41.15/';
+const SERVER = 'http://3.239.0.238/';
 const SERVER = 'http://localhost:3000/';
 ```
 
@@ -81,76 +81,76 @@ server {
 location / {
     proxy_set_header X-Forwarded-For $remote_addr;
     proxy_set_header Host $http_host;
-    proxy_pass http://172.31.44.197:8080/; 
+    proxy_pass http://172.31.65.28:8080/; 
 }
 location /chain {
     proxy_set_header X-Forwarded-For $remote_addr;
     proxy_set_header Host $http_host;
-    proxy_pass http://172.31.44.197:8080/chain; 
+    proxy_pass http://172.31.65.28:8080/chain; 
 }
 location /msg {
     proxy_set_header X-Forwarded-For $remote_addr;
     proxy_set_header Host $http_host;
-    proxy_pass http://172.31.44.197:8080/msg; 
+    proxy_pass http://172.31.65.28:8080/msg; 
 }
 location /dolev_strong {
     proxy_set_header X-Forwarded-For $remote_addr;
     proxy_set_header Host $http_host;
-    proxy_pass http://172.31.44.197:8080/dolev_strong; 
+    proxy_pass http://172.31.65.28:8080/dolev_strong; 
 }
 location /file {
     proxy_set_header X-Forwarded-For $remote_addr;
     proxy_set_header Host $http_host;
-    proxy_pass http://172.31.44.197:8080/file; 
+    proxy_pass http://172.31.65.28:8080/file; 
 }
 location /upload {
     proxy_set_header X-Forwarded-For $remote_addr;
     proxy_set_header Host $http_host;
-    proxy_pass http://172.31.44.197:4500/upload; 
+    proxy_pass http://172.31.65.28:4500/upload; 
 }
 location /exec {
     proxy_set_header X-Forwarded-For $remote_addr;
     proxy_set_header Host $http_host;
-    proxy_pass http://172.31.44.197:4500/exec; 
+    proxy_pass http://172.31.65.28:4500/exec; 
 }
 location /get_run {
     proxy_set_header X-Forwarded-For $remote_addr;
     proxy_set_header Host $http_host;
-    proxy_pass http://172.31.44.197:4500/get_run; 
+    proxy_pass http://172.31.65.28:4500/get_run; 
 }
 location /player_state {
     proxy_set_header X-Forwarded-For $remote_addr;
     proxy_set_header Host $http_host;
-    proxy_pass http://172.31.44.197:4500/player_state; 
+    proxy_pass http://172.31.65.28:4500/player_state; 
 }
 location /message {
     proxy_set_header X-Forwarded-For $remote_addr;
     proxy_set_header Host $http_host;
-    proxy_pass http://172.31.44.197:4500/message; 
+    proxy_pass http://172.31.65.28:4500/message; 
 }
 location /list_run {
     proxy_set_header X-Forwarded-For $remote_addr;
     proxy_set_header Host $http_host;
-    proxy_pass http://172.31.44.197:4500/list_run; 
+    proxy_pass http://172.31.65.28:4500/list_run; 
 }
 location /config {
     proxy_set_header X-Forwarded-For $remote_addr;
     proxy_set_header Host $http_host;
-    proxy_pass http://172.31.44.197:4500/config; 
+    proxy_pass http://172.31.65.28:4500/config; 
 }
 ```
 
-Note that `172.31.44.197` is the private IP address that we deploy our server in. You should change it into the private IP that you deploy your server in
+Note that `172.31.65.28` is the private IP address that we deploy our server in. You should change it into the private IP that you deploy your server in
 
 After saving this then restart `nginx` service
 ```bash
 sudo systemctl restart nginx
 ```
 
-Change the line in `Global.js` from top to the bottom one, you should replace `54.144.41.15` with the public IP that your server deploys in, or public domain name:
+Change the line in `Global.js` from top to the bottom one, you should replace `3.239.0.238` with the public IP that your server deploys in, or public domain name:
 ```bash
 const SERVER = 'http://localhost:3000/';
-const SERVER = 'http://54.144.41.15/';
+const SERVER = 'http://3.239.0.238/';
 ```
 
 Start the UI server
